@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.ThingsMapper">
+    <!--商品信息 -->
+    <resultMap id="thingsResultMap" type="com.example.entity.Things">
+        <result column="t_id"  property="t_id" />
+        <result column="t_name"  property="t_name" />
+        <result column="t_dis"  property="t_dis" />
+        <result column="t_coll_count"  property="t_coll_count" />
+        <result column="inventory"  property="inventory" />
+        <result column="t_img"  property="t_img" />
+        <result column="heat"  property="heat" />
+        <result column="mark"  property="mark" />
+        <result column="state"  property="state" />
+        <!--<result column="discount"  property="discount" />-->
+    </resultMap>
+    <!--&lt;!&ndash;历史记录&ndash;&gt;-->
+    <!--<resultMap id="historyResultMap" type="com.example.entity.History">-->
+        <!--<result column="id"  property="id" />-->
+        <!--<result column="t_id"  property="t_id" />-->
+        <!--<result column="u_id"  property="u_id" />-->
+        <!--<result column="time"  property="time" />-->
+        <!--<result column="number"  property="number" />-->
+        <!--<result column="state"  property="state" />-->
+    <!--</resultMap>-->
+    <!--&lt;!&ndash;商品规格&ndash;&gt;-->
+    <!--<resultMap id="goods_specificResultMap" type="com.example.entity.Goods_specific">-->
+        <!--<result column="gs_id"  property="gs_id" />-->
+        <!--<result column="t_id"  property="t_id" />-->
+        <!--<result column="gd_desc"  property="gd_desc" />-->
+        <!--<result column="t_price"  property="t_price" />-->
+    <!--</resultMap>-->
+    <!--&lt;!&ndash;商品类型&ndash;&gt;-->
+    <!--<resultMap id="categoryResultMap" type="com.example.entity.Category">-->
+        <!--<result column="c_id"  property="c_id" />-->
+        <!--<result column="t_id"  property="t_id" />-->
+        <!--<result column="c_name"  property="c_name" />-->
+        <!--<result column="state"  property="state" />-->
+    <!--</resultMap>-->
+
+    <select id="selectThings" parameterType="Integer" resultType="Things" resultMap="thingsResultMap">
+      select * from things where t_id=#{id}
+    </select>
+    <!--<insert id="addThings" parameterMap="thingsResultMap" >
+        insert into things (t_id,t_name,t_dis,t_coll_count,inventory,t_img,heat,mark,state,discount)
+        values (#{t_id},#{t_name},#{t_dis},#{t_coll_count},#{inventory},#{t_img},#{heat},#{mark},#{state},#{discount})
+    </insert>-->
+
+
+
+</mapper>
