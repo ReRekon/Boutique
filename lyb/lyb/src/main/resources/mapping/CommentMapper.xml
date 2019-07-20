@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.CommentMapper">
+    <resultMap id="comment" type="com.example.entity.Comment">
+        <id column="commentId" property="commentId"/>
+        <result column="userId" property="userId"/>
+        <result column="articleId" property="articleId"/>
+        <result column="orderId" property="orderId"/>
+        <result column="commentTime" property="commentTime"/>
+        <result column="commentContent" property="commentContent"/>
+        <result column="fatherId" property="fatherId"/>
+    </resultMap>
+    <select id="find" resultType="com.example.entity.Comment">
+        SELECT * FROM comment WHERE commentId = #{id}
+    </select>
+    <insert id="add" parameterType="com.example.entity.Comment">
+        insert into comment(userId,articleId,orderId,commentTime,commentContent,fatherId)
+        values (#{userId},#{articleId},#{orderId},#{commentTime},#{commentContent},#{fatherId})
+    </insert>
+    <delete id="delete">
+        delete from comment where commentId = #{id}
+    </delete>
+    <!-- 返回所有评论信息 -->
+    <select id="findAll" resultType="com.example.entity.Comment">
+        select * from comment;
+    </select>
+    <!-- 查找该评论所有子评论 -->
+    <select id="findChild" resultType="com.example.entity.Comment">
+        select * from comment where FIND_IN_SET(commentId,getChild(#{commentId}))
+    </select>
+</mapper>
