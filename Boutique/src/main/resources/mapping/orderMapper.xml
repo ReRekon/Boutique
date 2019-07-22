@@ -3,9 +3,9 @@
 <mapper namespace="com.example.mapper.OrderMapper">
 
     <resultMap id="orderMap" type="com.example.entity.Order">
-        <id column="o_id"  property="id" />
+        <id column="o_id"  property="orderId" />
         <result column="u_id"  property="userId" />
-        <result column="o_status"  property="state" />
+        <result column="o_stauts"  property="state" />
         <result column="o_price"  property="totalPrice" />
         <result column="o_num"  property="number" />
         <result column="final_price"  property="finalPrice" />
@@ -16,7 +16,7 @@
 
 
     <resultMap id="orderItemMap" type="com.example.entity.OrderItem">
-        <id column="uo_id"  property="id" />
+        <id column="uo_id"  property="orderItemId" />
         <result column="o_id"  property="orderId" />
         <result column="t_id"  property="productId" />
         <result column="uo_num"  property="number" />
@@ -24,60 +24,54 @@
     </resultMap>
 
     <resultMap id="productMap" type="com.example.entity.Product">
-        <id column="t_id"  property="id" />
+        <id column="t_id"  property="productId" />
         <result column="t_name"  property="name" />
         <result column="t_coll_count"  property="collectTimes" />
         <result column="t_img"  property="imgURL" />
     </resultMap>
 
     <resultMap id="ShoppingCartIteMap" type="com.example.entity.ShoppingCartItem">
-        <id column="gi_id"  property="id" />
+        <id column="gi_id"  property="shoppingCartItemId" />
         <result column="t_id"  property="productId" />
         <result column="sc_id"  property="shoppingCartId" />
         <result column="t_num"  property="number" />
         <result column="gi_time"  property="enterTime" />
         <result column="state"  property="state" />
         <result column="final_pay"  property="finalPrice" />
+        <result column="total_prirce"  property="totalPrice" />
     </resultMap>
 
+    <resultMap id="ProductSpecificationMap" type="com.example.entity.ProductSpecification">
+        <id column="gs_id" property="productSpecificationId"></id>
+        <result column="t_id" property="productId"></result>
+        <result column="gd_desc" property="description"></result>
+        <result column="t_price" property="price"></result>
+    </resultMap>
 
-
-
-    <select id="queryOrder" resultMap="orderMap" parameterType="int" resultType="com.example.entity.Order" >
-        select * from orders where o_id = #{id}
+    <select id="queryOrderState" resultMap="orderMap" parameterType="int" resultType="com.example.entity.Order" >
+        select o_stauts,o_id from orders where u_id = #{userId}
     </select>
 
-    <insert id="insertOrder" parameterType="com.example.entity.Order" >
+    <insert id="insertOrder" parameterType="com.example.entity.Order" useGeneratedKeys="true" keyProperty="orderId" keyColumn="o_id">
         insert into orders(u_id,o_stauts,o_price,o_num,o_starttime,o_finishtime,final_price,o_number)
                     values(#{userId},#{state},#{totalPrice},#{number},#{verifyTime},#{finishTime},#{finalPrice},#{orderNumber});
     </insert>
 
-    <update id="updateOrder" parameterType="com.example.entity.Order">
-        update orders set  u_id=#{userId},
-                            o_stauts=#{state},
-                            o_price=#{totalPrice},
-                            o_num=#{number},
-                            o_finishtime=#{finishTime},
-                            o_starttime=#{verifyTime},
-                            final_price=#{finalPrice}
-                            where o_id=#{id};
-    </update>
-
     <delete id="deleteOrder" parameterType="com.example.entity.Order">
-      delete from orders where o_id= #{id}
+      delete from orders where o_id= #{orderId}
     </delete>
 
     <select id="queryOrderItem"   resultMap="orderItemMap" parameterType="int" resultType="com.example.entity.OrderItem">
-        select * from user_order where uo_id = #{id}
+        select * from user_order where uo_id = #{orderItemId}
     </select>
 
-    <insert id="insertOrderItem" parameterType="com.example.entity.OrderItem">
+    <insert id="insertOrderItem" parameterType="com.example.entity.OrderItem" >
         insert into user_order(o_id,t_id,uo_num,final_pay)
                     values(#{orderId},#{productId},#{number},#{finalPrice});
     </insert>
 
     <update id="updateOrderItem" parameterType="com.example.entity.OrderItem">
-        update user_order set  uo_id=#{id},
+        update user_order set  uo_id=#{orderItemId},
                             o_id=#{orderId},
                             t_id=#{productId},
                             uo_num=#{number},
@@ -86,15 +80,39 @@
     </update>
 
     <delete id="deleteOrderItem" parameterType="com.example.entity.OrderItem">
-      delete from user_order where uo_id= #{id}
+      delete from user_order where o_id= #{orderId}
     </delete>
 
 
-    <select id="getShoppingItem" parameterType="int" resultType="ShoppingCartItem" resultMap="ShoppingCartIteMap">
-        select * from goods_item where goods_item.sc_id=(select sc_id from shop_cart where shop_cart.u_id=#{id});
+    <select id="getShoppingItem" parameterType="Integer" resultType="com.example.entity.ShoppingCartItem" resultMap="ShoppingCartIteMap">
+        select * from goods_item where goods_item.sc_id=(select sc_id from shop_cart where shop_cart.u_id=#{userId});
     </select>
 
     <select id="getState" parameterType="int" resultType="Product" resultMap="productMap">
-        select inventory,state,t_name from things where t_id=#{productId}
+        select inventory,state,t_name from product where t_id=#{productId}
     </select>
+
+    <update id="updateProduct">
+        update product set inventory = #{inventory} where t_id=#{productId}
+    </update>
+
+    <delete id="deleteShoppingCartItem" parameterType="int">
+      delete from goods_item where state= #{state}
+    </delete>
+
+    <update id="updateOrder"  >
+        update orders set o_finishtime = #{finishTime},o_stauts= #{state} where o_id=#{orderId}
+    </update>
+
+    <update id="updateDeleteOrder"  >
+        update orders set o_stauts= #{state} where o_id=#{orderId}
+    </update>
+
+<!--    <select id="queryProduct" parameterType="int" resultMap="productMap">
+        select * from product where t_id=#{productId}
+    </select>
+
+    <select id="getPrice" parameterType="int" resultMap="ProductSpecificationMap">
+        select t_price from goods_specific where t_id=#{productId}
+    </select>-->
 </mapper>

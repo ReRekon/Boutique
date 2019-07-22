@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -60,7 +61,7 @@ public class DemoApplicationTests {
     public void getShoppingCartItem(){
 
         Admin admin=new Admin();
-        admin.setId(1);
+        admin.setUserId(1);
         admin.setEmail("44444");
         admin.setImageURL("dfsd");
         admin.setVip(100);
@@ -68,7 +69,55 @@ public class DemoApplicationTests {
         admin.setTel("3123131");
 
         httpServletRequest.getSession().setAttribute("admin",admin);
-        orderController.createOrder();
+        orderController.createOrderByShoppingCart();
     }
 
+    @Test
+    public void payOrderTest(){
+        Admin admin=new Admin();
+        admin.setUserId(2);
+        admin.setEmail("44444");
+        admin.setImageURL("dfsd");
+        admin.setVip(100);
+        admin.setName("afda");
+        admin.setTel("3123131");
+
+        httpServletRequest.getSession().setAttribute("admin",admin);
+        Map map=(Map) orderController.createOrderByShoppingCart();
+        String str=orderController.payOrder(map);
+        System.out.println(str);
+    }
+
+    @Test
+    public void cancelTest()
+    {
+        Admin admin=new Admin();
+        admin.setUserId(2);
+        admin.setEmail("44444");
+        admin.setImageURL("dfsd");
+        admin.setVip(100);
+        admin.setName("afda");
+        admin.setTel("3123131");
+        httpServletRequest.getSession().setAttribute("admin",admin);
+
+        Map map=(Map) orderController.createOrderByShoppingCart();
+        String str=orderController.cancelOrder();
+        System.out.println(str);
+    }
+
+    @Test
+    public void deleteOrderTest()
+    {
+        Admin admin=new Admin();
+        admin.setUserId(1);
+        admin.setEmail("44444");
+        admin.setImageURL("dfsd");
+        admin.setVip(100);
+        admin.setName("afda");
+        admin.setTel("3123131");
+        httpServletRequest.getSession().setAttribute("admin",admin);
+
+        String str=orderController.deleteOrder(47);
+        System.out.println(str);
+    }
 }

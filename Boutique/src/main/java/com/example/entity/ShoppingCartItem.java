@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class ShoppingCartItem {
-    private int id;
+    private int shoppingCartItemId;
     private int productId;
     private int shoppingCartId;
     private long number;
@@ -21,12 +21,12 @@ public class ShoppingCartItem {
         this.totalPrice = totalPrice;
     }
 
-    public int getId() {
-        return id;
+    public int getShoppingCartItemId() {
+        return shoppingCartItemId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setShoppingCartItemId(int shoppingCartItemId) {
+        this.shoppingCartItemId = shoppingCartItemId;
     }
 
     public int getProductId() {

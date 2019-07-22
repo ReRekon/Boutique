@@ -3,7 +3,7 @@ package com.example.entity;
 import java.util.Date;
 
 public class Admin {
-    private int id;
+    private int userId;
     private String name;
     private String imageURL;
     private String password;
@@ -15,12 +15,12 @@ public class Admin {
     private Date createtime;
     private Date updatetime;
 
-    public int getId() {
-        return id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getName() {

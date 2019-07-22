@@ -1,7 +1,7 @@
 package com.example.entity;
 
 public class Product {
-    private int id;
+    private int productId;
     private String name;
     private String description;
     private long collectTimes;
@@ -11,12 +11,12 @@ public class Product {
     private float mark;
     private int state;
 
-    public int getId() {
-        return id;
+    public int getProductId() {
+        return productId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
     public String getName() {

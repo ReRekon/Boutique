@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Order
 {
-    private int id;
+    private int orderId;
     private int userId;
     private int state;
     private BigDecimal totalPrice;
@@ -24,12 +24,12 @@ public class Order
         this.orderNumber = orderNumber;
     }
 
-    public int getId() {
-        return id;
+    public int getOrderId() {
+        return orderId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 
     public int getUserId() {

@@ -3,18 +3,18 @@ package com.example.entity;
 import java.math.BigDecimal;
 
 public class OrderItem {
-    private int id;
+    private int orderItemId;
     private int orderId;
     private int productId;
     private long number;
     private BigDecimal finalPrice;
 
-    public int getId() {
-        return id;
+    public int getOrderItemId() {
+        return orderItemId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setOrderItemId(int orderItemId) {
+        this.orderItemId = orderItemId;
     }
 
     public int getOrderId() {
