@@ -1,0 +1,153 @@
+数据库设计：
+
+//一共15张表：用户表（admin），商品表（things），用户地址（admin_adress），
+用户银行卡（admin_bankcard），订单表（Orders），商品图片（product_image），
+商品类型（category），商品规格（goods_specific），商品规格图片（specifiction_image），
+，评论表（comment），浏览历史（history），购物车（shop_cart），
+购物车项（goods_item），订单内容（user_order），用户收藏（user_collection），
+
+//实体
+ 用户表(admin);***
+	id 主键；
+	uname  用户名 ；
+	upwd	用户密码；
+	upur   用户头像，存路径；
+	usignature  用户个签
+	uemil	用户邮箱；
+	utel	用户号码；
+	uvip	会员积分；//2.0新增
+	state	状态（预留字段）；
+	创建时间	datatime；
+	最近一次更新时间	datatime；
+	//state，创建时间和最后一次更新时间为3.0新增
+		
+商品表（things）：***
+	tid   主键；
+	tname 商品名称；
+	tdis   商品描述；
+	tcol_count  收藏次数；
+	inventory	库存量；
+	heat	商品热度；
+	mark	商品评分；
+	state	标示已下架；
+	//inventory、heat、mark、state为3.0新增
+
+用户地址（admin_adress）：//添加时查重，与用户一对多***
+	aaid  主键；
+	uid		外键，用户ID；
+	aaname   收件人；
+	telephone	收件人号码；
+	province	省；
+	city		县；
+	area		区；
+	street		所在街道；
+	adderss   收件人地址；
+	state 		状态：0-默认地址，1-已删除
+	//telephone、province、city、street、state 为3.0新增
+	
+***	
+用户银行卡（admin_bankcard）://用户银行卡信息
+	abid	主键；
+	uid		外键，用户ID；
+	abtype	银行卡类型；
+	abnum	银行卡号；
+	
+***
+订单表（Orders）：//要求显示历史订单
+	oid  主键；
+	uid  外键，存储用户；
+	ostauts  订单状态；
+		//0-未付款、1-已付款、2-退单、3-用户删除订单，数据未删除
+	oprice 订单总价；
+	onum  订单商品总量
+	o_start_time 	datatimes;//锁定商品时间计算，过时释放
+	o_finsh_time	datatimes；//完成订单时间
+	final_price		最终价格（折后价）；//3.0新增
+
+//3.0新增商品图片表
+商品图片（product_image）：
+	id	主键：编号ID；
+	t_id	商品ID；
+	pro_image	图片路径；
+	decription	商品描述；
+	state	预留字段；
+
+//2.0新增商品类型表***
+商品类型（category）：//规定商品类型：吊坠、项链、礼物、配饰、美妆、女包
+	cid		商品类型属性；
+	cname	商品类型；吊坠、项链、礼物、配饰、美妆、女包
+	t_id	商品ID；
+	state	预留字段；
+	
+//3.0新增商品规格
+商品规格（goods_specific）：
+	gs_id	主键：编号ID；
+	t_id	外键：商品ID；
+	gd_desc	规格描述；
+	t_price	规格对应的价格；
+	
+//3.0新增规格图片
+商品规格图片（specifiction_image）：
+	id	主键：编号ID；
+	gs_id	外键：商品规格ID；
+	sp_image	规格对应图片；
+	description	规格描述；
+	state	预留字段；
+	
+
+//多对多关系
+/*用户、商品与订单表的评论关系*/
+评论表（comment）：//3.0新增
+	id	主键；
+	uid	外键：用户ID；
+	tid	外键；商品编号；
+	oid	外键：订单表ID；
+	image_path	评论图片；
+	state	状态：0-默认发表状态 1-已删除
+	description	评论内容；
+	
+/*用户与商品表的历史（足迹、搜索历史）关系*/
+浏览历史（history）：//3.0新增
+	id	主键：编号ID；
+	u_id	外键，用户ID；
+	t_id	外键：商品ID；
+	time	搜索时间；
+	number	搜索次数；
+	state	预留项；
+
+/*用户与商品的购物车关系*/	
+购物车（shop_cart）://加入购物车就增加一条记录，清空删除（据uid）
+	scid  主键；***
+	uid  外键；标记用户
+	t_num	商品总数；
+	
+/*用户与购物车的购物车项关系*/
+购物车项（goods_item）://3.0新增购物车项
+	编号ID	主键；
+	t_id	商品ID；
+	sc_id	购物车ID；
+	t_num	当前商品数量；
+	gi_time		加入时间；
+	state		0表示删除，1表示没删除，2表示已被勾选生成订单，-1表示下架；
+	final_pay	最终价格（折后价）；
+	
+/*用户与商品的订单项关系*/
+订单内容（user_order）:***
+	uoid  主键；
+	oid   外键；订单编号；
+	tid   外键；商品编号；
+	uonum  商品数量；
+	final_pay	该订单项最终价格（折后价）；
+	
+/*用户与商品的收藏关系*/
+用户收藏（user_collection）:
+	ucid  主键；
+	uid   外键，用户ID；
+	tid   外键；商品编号；
+	uc_time	收藏时间；
+	state	状态，预留字段；//3.0新增
+
+//用户足迹，保存最近3天的浏览商品记录。通过redius实现，设置key的过期时间。
+
+	
+//用户足迹，保存最近3天的浏览商品记录。通过redius实现，设置key的过期时间。
