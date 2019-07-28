@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2019/7/27 21:35:13                           */
+/* Created on:     2019/7/28 10:26:39                           */
 /*==============================================================*/
 
 
@@ -30,6 +30,8 @@ drop table if exists product;
 
 drop table if exists product_image;
 
+drop table if exists producttype2;
+
 drop table if exists shop_cart;
 
 drop table if exists specifiction_image;
@@ -37,8 +39,6 @@ drop table if exists specifiction_image;
 drop table if exists user_collection;
 
 drop table if exists user_order;
-
-drop table if exists 商品类型2级;
 
 /*==============================================================*/
 /* Table: admin                                                 */
@@ -56,7 +56,6 @@ create table admin
    state                int(11),
    createtime           datetime,
    updatetime           datetime,
-   otpcode              varchar(256),
    primary key (u_id)
 );
 
@@ -134,7 +133,7 @@ create table commentreply
 /*==============================================================*/
 create table foucs_image
 (
-   f_id                 int(12) not null auto_increment,
+   f_id                 int(11) not null auto_increment,
    image                varchar(128),
    description          varchar(128),
    state                int(10),
@@ -208,7 +207,7 @@ create table product
 (
    t_id                 int(11) not null auto_increment,
    c_id                 int(11),
-   c_id2                int(12),
+   c_id2                int(11),
    t_name               varchar(128),
    t_dis                varchar(256),
    t_coll_count         bigint,
@@ -232,6 +231,18 @@ create table product_image
    decription           varchar(128),
    state                int(11),
    primary key (id)
+);
+
+/*==============================================================*/
+/* Table: producttype2                                          */
+/*==============================================================*/
+create table producttype2
+(
+   c_id2                int(11) not null,
+   c_id                 int(11),
+   c_name2              varchar(128),
+   state2               varchar(128),
+   primary key (c_id2)
 );
 
 /*==============================================================*/
@@ -285,15 +296,81 @@ create table user_order
    primary key (uo_id)
 );
 
-/*==============================================================*/
-/* Table: 商品类型2级                                                */
-/*==============================================================*/
-create table 商品类型2级
-(
-   c_id2                int(12) not null,
-   c_id                 int(11),
-   c_name2              varchar(128),
-   state2               varchar(128),
-   primary key (c_id2)
-);
+alter table admin_adress add constraint FK_Reference_1 foreign key (u_id)
+      references admin (u_id) on delete restrict on update restrict;
+
+alter table admin_bankcard add constraint FK_Reference_3 foreign key (u_id)
+      references admin (u_id) on delete restrict on update restrict;
+
+alter table comment add constraint FK_Reference_19 foreign key (u_id)
+      references admin (u_id) on delete restrict on update restrict;
+
+alter table comment add constraint FK_Reference_20 foreign key (t_id)
+      references product (t_id) on delete restrict on update restrict;
+
+alter table comment add constraint FK_Reference_21 foreign key (o_id)
+      references orders (o_id) on delete restrict on update restrict;
+
+alter table comment add constraint FK_Reference_28 foreign key (id)
+      references commentreply (追加评论ID) on delete restrict on update restrict;
+
+alter table goods_item add constraint FK_Reference_14 foreign key (t_id)
+      references product (t_id) on delete restrict on update restrict;
+
+alter table goods_item add constraint FK_Reference_24 foreign key (sc_id)
+      references shop_cart (sc_id) on delete restrict on update restrict;
+
+alter table goods_item add constraint FK_Reference_26 foreign key (gs_id)
+      references goods_specific (gs_id) on delete restrict on update restrict;
+
+alter table goods_specific add constraint FK_Reference_15 foreign key (t_id)
+      references product (t_id) on delete restrict on update restrict;
+
+alter table history add constraint FK_Reference_17 foreign key (u_id)
+      references admin (u_id) on delete restrict on update restrict;
+
+alter table history add constraint FK_Reference_18 foreign key (t_id)
+      references product (t_id) on delete restrict on update restrict;
+
+alter table orders add constraint FK_Reference_2 foreign key (u_id)
+      references admin (u_id) on delete restrict on update restrict;
+
+alter table product add constraint FK_Reference_10 foreign key (t_id)
+      references category (c_id) on delete restrict on update restrict;
+
+alter table product add constraint FK_Reference_11 foreign key (t_id)
+      references category (c_id) on delete restrict on update restrict;
+
+alter table product add constraint FK_Reference_25 foreign key (c_id)
+      references category (c_id) on delete restrict on update restrict;
+
+alter table product add constraint FK_Reference_30 foreign key (c_id2)
+      references producttype2 (c_id2) on delete restrict on update restrict;
+
+alter table product_image add constraint FK_Reference_23 foreign key (t_id)
+      references product (t_id) on delete restrict on update restrict;
+
+alter table producttype2 add constraint FK_Reference_29 foreign key (c_id)
+      references category (c_id) on delete restrict on update restrict;
+
+alter table shop_cart add constraint FK_Reference_4 foreign key (u_id)
+      references admin (u_id) on delete restrict on update restrict;
+
+alter table specifiction_image add constraint FK_Reference_22 foreign key (gs_id)
+      references goods_specific (gs_id) on delete restrict on update restrict;
+
+alter table user_collection add constraint FK_Reference_5 foreign key (u_id)
+      references admin (u_id) on delete restrict on update restrict;
+
+alter table user_collection add constraint FK_Reference_7 foreign key (t_id)
+      references product (t_id) on delete restrict on update restrict;
+
+alter table user_order add constraint FK_Reference_27 foreign key (gs_id)
+      references goods_specific (gs_id) on delete restrict on update restrict;
+
+alter table user_order add constraint FK_Reference_8 foreign key (o_id)
+      references orders (o_id) on delete restrict on update restrict;
+
+alter table user_order add constraint FK_Reference_9 foreign key (t_id)
+      references product (t_id) on delete restrict on update restrict;
 
