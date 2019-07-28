@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.admin.mapper.AdminMapper">
+    <resultMap id="adminResultMap" type="Admin">
+        <id column="u_id" property="id"></id>
+        <result column="u_name" property="name"></result>
+        <result column="u_pwd" property="password"></result>
+        <result column="state" property="state"></result>
+        <result column="u_emil" property="email"></result>
+        <result column="u_signature" property="signature"></result>
+        <result column="u_pur" property="imageURL"></result>
+        <result column="u_tel" property="tel"></result>
+        <result column="u_vip" property="vip"></result>
+        <result column="createtime" property="createtime"></result>
+        <result column="updatetime" property="updatetime"></result>
+    </resultMap>
+    <resultMap id="adminBankCardResultMap" type="AdminBankCard">
+        <id column="ab_id"  property="id"></id>
+        <result column="u_id" property="userId"></result>
+        <result column="ab_type" property="type"></result>
+        <result column="ab_num" property="number"></result>
+    </resultMap>
+    <insert id="insertAdmin" parameterType="Admin">
+        insert into admin (u_name,u_pwd,u_tel,createtime,state)
+        values (#{name},#{password},#{tel},#{createtime},#{state})
+    </insert>
+    <select id="login" parameterType="AdminLoginVo" resultMap="adminResultMap">
+        select * from admin where u_name = #{name} and u_pwd = #{password}
+    </select>
+    <select id="checkUserName" resultType="Integer" parameterType="String">
+        select count(*) from admin where u_name=#{name}
+    </select>
+    <insert id="insertAdminBankCard" parameterType="AdminBankCard" >
+        insert into admin_bankcard (u_id,ab_type,ab_num ) values (#{id},#{type},#{number})
+    </insert>
+    <select id="checkTel" resultType="Integer" parameterType="String">
+        select count(*) from admin where u_tel=#{tel}
+    </select>
+    <select id="checkPassword" resultType="Integer" parameterType="Admin">
+        select count(*) from admin where u_name = #{name} and u_pwd = #{password}
+    </select>
+    <update id="updatePassword" parameterType="Admin" >
+        update admin set u_pwd = #{password} where u_name = #{name}
+    </update>
+    <select id="findBankCard" parameterType="Integer" resultMap="adminBankCardResultMap">
+        select * from admin_bankcard where u_id = #{id}
+    </select>
+    <select id="selectByTel" parameterType="String" resultMap="adminResultMap">
+        select * from admin where u_tel = #{tel}
+    </select>
+    <update id="updateAdmin" parameterType="AdminVo">
+        update admin set u_name = #{name},u_emil = #{email},u_tel = #{tel},u_signature = #{signature} where u_id = #{id}
+    </update>
+</mapper>
