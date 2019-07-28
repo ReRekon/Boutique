@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.CommentMapper">
+    <resultMap id="comment" type="com.example.entity.Comment">
+        <id column="commentId" property="commentId"/>
+        <result column="userId" property="userId"/>
+        <result column="articleId" property="articleId"/>
+        <result column="orderId" property="orderId"/>
+        <result column="commentTime" property="commentTime"/>
+        <result column="commentContent" property="commentContent"/>
+        <result column="fatherId" property="fatherId"/>
+        <result column="likenum" property="likenum"/>
+    </resultMap>
+
+    <resultMap id="commentList" type="com.example.entity.CommentList">
+        <id column="pic" property="pic"/>
+        <result column="userName" property="userName"/>
+        <result column="commentTime" property="commentTime"/>
+        <result column="articleType" property="articleType"/>
+        <result column="commentContent" property="commentContent"/>
+    </resultMap>
+
+    <select id="findChild" resultType="com.example.entity.Comment">
+        select * from comment where FIND_IN_SET(commentId,getChild(#{commentId}))
+    </select>
+
+    <insert id="addCommentByOrder" parameterType="com.example.entity.Comment">
+        insert into comment(userId,orderId,articleId,commentTime,commentContent,pic,fatherId)
+        values ((select userId from orderlist where orderId = #{orderId}),#{orderId},(select articleId from orderlist where orderId = #{orderId}),#{date},#{commentContent},#{pic},0)
+    </insert>
+
+    <select id="findAllComment" resultType="com.example.entity.CommentList">
+        select u.pic,u.userName,o.articleType,c.commentTime,c.commentContent,c.pic
+        from comment c,user u,orderlist o
+        where c.articleId=#{articleId} and c.userId=u.userId and c.userId=o.userId and c.articleId=o.articleId
+    </select>
+
+    <select id="findById" resultType="com.example.entity.CommentList">
+        select u.pic,u.userName,o.articleType,c.commentTime,c.commentContent
+        from comment c,user u,orderlist o
+        where c.userId=#{userId} and c.articleId=o.articleId and u.userId=c.userId and u.userId=o.userId
+    </select>
+
+    <select id="findCount" parameterType="int" resultType="int">
+         select count(*) from comment where userId=#{userId}
+    </select>
+</mapper>
