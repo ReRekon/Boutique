@@ -7,11 +7,31 @@ public class ShoppingCartItem {
     private int shoppingCartItemId;
     private int productId;
     private int shoppingCartId;
+    private int productSpecificationId;
+
     private long number;
-    private Date enterTime;
     private int state;
+    private String logo;
     private BigDecimal finalPrice;
     private BigDecimal totalPrice;
+
+    public int getProductSpecificationId() {
+        return productSpecificationId;
+    }
+
+    public void setProductSpecificationId(int productSpecificationId) {
+        this.productSpecificationId = productSpecificationId;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+
+
 
     public BigDecimal getTotalPrice() {
         return totalPrice;
@@ -51,14 +71,6 @@ public class ShoppingCartItem {
 
     public void setNumber(long number) {
         this.number = number;
-    }
-
-    public Date getEnterTime() {
-        return enterTime;
-    }
-
-    public void setEnterTime(Date enterTime) {
-        this.enterTime = enterTime;
     }
 
     public int getState() {

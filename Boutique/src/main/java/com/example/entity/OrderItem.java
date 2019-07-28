@@ -6,6 +6,44 @@ public class OrderItem {
     private int orderItemId;
     private int orderId;
     private int productId;
+    private int	productSpecificationId;
+    private String logo;
+
+    ProductSpecification productSpecification;
+    String productName;
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public ProductSpecification getProductSpecification() {
+        return productSpecification;
+    }
+
+    public void setProductSpecification(ProductSpecification productSpecification) {
+        this.productSpecification = productSpecification;
+    }
+
+    public int getProductSpecificationId() {
+        return productSpecificationId;
+    }
+
+    public void setProductSpecificationId(int productSpecificationId) {
+        this.productSpecificationId = productSpecificationId;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+
     private long number;
     private BigDecimal finalPrice;
 

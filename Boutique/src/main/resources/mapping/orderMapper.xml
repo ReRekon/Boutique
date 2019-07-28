@@ -21,6 +21,7 @@
         <result column="t_id"  property="productId" />
         <result column="uo_num"  property="number" />
         <result column="final_pay"  property="finalPrice" />
+        <result column="gs_id"  property="productSpecificationId" />
     </resultMap>
 
     <resultMap id="productMap" type="com.example.entity.Product">
@@ -30,12 +31,12 @@
         <result column="t_img"  property="imgURL" />
     </resultMap>
 
-    <resultMap id="ShoppingCartIteMap" type="com.example.entity.ShoppingCartItem">
+    <resultMap id="ShoppingCartItemMap" type="com.example.entity.ShoppingCartItem">
         <id column="gi_id"  property="shoppingCartItemId" />
         <result column="t_id"  property="productId" />
         <result column="sc_id"  property="shoppingCartId" />
         <result column="t_num"  property="number" />
-        <result column="gi_time"  property="enterTime" />
+        <result column="gs_id"  property="productSpecificationId" />
         <result column="state"  property="state" />
         <result column="final_pay"  property="finalPrice" />
         <result column="total_prirce"  property="totalPrice" />
@@ -48,8 +49,8 @@
         <result column="t_price" property="price"></result>
     </resultMap>
 
-    <select id="queryOrderState" resultMap="orderMap" parameterType="int" resultType="com.example.entity.Order" >
-        select o_stauts,o_id from orders where u_id = #{userId}
+    <select id="queryOrders" resultMap="orderMap" parameterType="int" resultType="com.example.entity.Order" >
+        select * from orders where u_id = #{userId}
     </select>
 
     <insert id="insertOrder" parameterType="com.example.entity.Order" useGeneratedKeys="true" keyProperty="orderId" keyColumn="o_id">
@@ -61,13 +62,13 @@
       delete from orders where o_id= #{orderId}
     </delete>
 
-    <select id="queryOrderItem"   resultMap="orderItemMap" parameterType="int" resultType="com.example.entity.OrderItem">
-        select * from user_order where uo_id = #{orderItemId}
+    <select id="queryOrderItemByOrderId"   resultMap="orderItemMap" parameterType="int" >
+        select * from user_order where o_id = #{orderId}
     </select>
 
     <insert id="insertOrderItem" parameterType="com.example.entity.OrderItem" >
-        insert into user_order(o_id,t_id,uo_num,final_pay)
-                    values(#{orderId},#{productId},#{number},#{finalPrice});
+        insert into user_order(o_id,t_id,uo_num,final_pay,gs_id)
+                    values(#{orderId},#{productId},#{number},#{finalPrice},#{productSpecificationId});
     </insert>
 
     <update id="updateOrderItem" parameterType="com.example.entity.OrderItem">
@@ -84,8 +85,9 @@
     </delete>
 
 
-    <select id="getShoppingItem" parameterType="Integer" resultType="com.example.entity.ShoppingCartItem" resultMap="ShoppingCartIteMap">
-        select * from goods_item where goods_item.sc_id=(select sc_id from shop_cart where shop_cart.u_id=#{userId});
+    <select id="getShoppingItem"  resultMap="ShoppingCartItemMap" parameterType="int">
+        select * from goods_item where goods_item.sc_id=(select sc_id from shop_cart where shop_cart.u_id=#{userId}) and
+        gi_id=#{shoppingCartItemId}
     </select>
 
     <select id="getState" parameterType="int" resultType="Product" resultMap="productMap">
@@ -97,7 +99,7 @@
     </update>
 
     <delete id="deleteShoppingCartItem" parameterType="int">
-      delete from goods_item where state= #{state}
+      delete from goods_item where t_id= #{productId}
     </delete>
 
     <update id="updateOrder"  >
@@ -108,11 +110,8 @@
         update orders set o_stauts= #{state} where o_id=#{orderId}
     </update>
 
-<!--    <select id="queryProduct" parameterType="int" resultMap="productMap">
-        select * from product where t_id=#{productId}
+    <select id="findSpecification" parameterType="int" resultMap="ProductSpecificationMap">
+        select * from goods_specific where t_id=#{productId} and gs_id=#{productSpecificationId}
     </select>
 
-    <select id="getPrice" parameterType="int" resultMap="ProductSpecificationMap">
-        select t_price from goods_specific where t_id=#{productId}
-    </select>-->
 </mapper>

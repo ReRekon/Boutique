@@ -1,89 +1,41 @@
 package com.example.service;
 
-
-import com.example.entity.Order;
-import com.example.entity.OrderItem;
-import com.example.entity.Product;
-import com.example.entity.ShoppingCartItem;
-import com.example.mapper.OrderMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.example.entity.*;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 import java.util.List;
 
+public interface OrderService {
+
+    List<Order> queryOrders(int userId);
 
 
-@Service
-public class OrderService {
-    @Autowired
-    OrderMapper orderMapper;
+    int insertOrder(Order order);
 
-    public List<Order>  queryOrderState(int userId)
-    {
-        return orderMapper.queryOrderState(userId);
-    }
 
-    public int insertOrder(Order order)
-    {
-       return orderMapper.insertOrder(order);
-    }
+    void deleteOrder(int orderId);
 
-    public void deleteOrder(int orderId)
-    {
-        orderMapper.deleteOrder(orderId);
-    }
+    void insertOrderItem(OrderItem orderItem);
 
-    public OrderItem queryOrderItem(int orderItemId)
-    {
-        return orderMapper.queryOrderItem(orderItemId);
-    }
+    void deleteOrderItem(int orderId);
 
-    public void insertOrderItem(OrderItem orderItem)
-    {
-        orderMapper.insertOrderItem(orderItem);
-    }
 
-    public void updateOrderItem(OrderItem orderItem)
-    {
-        orderMapper.updateOrderItem(orderItem);
-    }
+    ShoppingCartItem getShoppingItem(int userId,int shoppingCartItemId);
 
-    public void deleteOrderItem(int orderId)
-    {
-        orderMapper.deleteOrderItem(orderId);
-    }
 
-    public List<ShoppingCartItem> getShoppingItem(int userId){
+    Product getState(int productId);
 
-        return  orderMapper.getShoppingItem(userId);
-    }
+    int updateProduct(int productId,long inventory);
 
-    public Product getState(int productId){
-        return orderMapper.getState(productId);
-    }
+    int deleteShoppingCartItem(int state);
 
-    public int updateProduct(int productId,long inventory){
-        return orderMapper.updateProduct(productId,inventory);
-    }
+    int updateOrder(int orderId, int state, Date finishTime);
 
-    public int deleteShoppingCartItem(int state){
-        return orderMapper.deleteShoppingCartItem(state);
-    }
+    int updateDeleteOrder(int orderId, int state);
 
-    public int updateOrder(int orderId, int state, Date finishTime){
-        return orderMapper.updateOrder(orderId,state,finishTime);
-    }
 
-    public int updateDeleteOrder(int orderId, int state){
-        return orderMapper.updateDeleteOrder(orderId,state);
-    }
+    ProductSpecification findSpecification(@Param("productId") int productId, @Param("productSpecificationId") int productSpecificationId);
 
-/*    public Product queryProduct(int productId){
-        return orderMapper.queryProduct(productId);
-    }
-
-    public int getPrice(int productId){
-        return orderMapper.getPrice(productId);
-    }*/
+    List<OrderItem> queryOrderItemByOrderId(int orderId);
 }

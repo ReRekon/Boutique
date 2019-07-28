@@ -2,6 +2,7 @@ package com.example.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 
 public class Order
@@ -15,6 +16,16 @@ public class Order
     private java.util.Date verifyTime;
     private java.util.Date finishTime;
     private String orderNumber;
+
+    private List<OrderItem> orderItem;
+
+    public List<OrderItem> getOrderItem() {
+        return orderItem;
+    }
+
+    public void setOrderItem(List<OrderItem> orderItem) {
+        this.orderItem = orderItem;
+    }
 
     public String getOrderNumber() {
         return orderNumber;
