@@ -46,4 +46,15 @@ public class ProductImage {
     public void setState(int state) {
         this.state = state;
     }
+
+    @Override
+    public String toString() {
+        return "ProductImage{" +
+                "productImageId=" + productImageId +
+                ", procuctId=" + procuctId +
+                ", imageURL='" + imageURL + '\'' +
+                ", description='" + description + '\'' +
+                ", state=" + state +
+                '}';
+    }
 }

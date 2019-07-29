@@ -20,6 +20,11 @@ public class Result {
         this.number = number;
     }
 
+    public Result(int productId, int number) {
+        this.productId = productId;
+        this.number = number;
+    }
+
     @Override
     public String toString() {
         return "Result{" +

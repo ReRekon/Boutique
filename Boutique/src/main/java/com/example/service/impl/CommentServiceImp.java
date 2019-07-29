@@ -17,7 +17,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class CommentServiceImpl implements CommentService {
+public class CommentServiceImp implements CommentService {
 
     @Autowired
     private CommentMapper commentMapper;

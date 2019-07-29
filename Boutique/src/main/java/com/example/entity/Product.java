@@ -2,18 +2,41 @@ package com.example.entity;
 
 public class Product {
     private int productId;
+    private int productTypeId;  //一级分类
+    private int productTypeId2; //二级分类
     private String name;
     private String description;
     private long collectTimes;
     private long inventory;
-    private String imgURL;
+    private String logo;
     private int heat;
     private float mark;
     private int state;
+    private float discount;
 
-    private int productTypeId;
-    private int productTypeId2;
-    private ProductImage productImage;
+    public int getProductTypeId() {
+        return productTypeId;
+    }
+
+    public void setProductTypeId(int productTypeId) {
+        this.productTypeId = productTypeId;
+    }
+
+    public int getProductTypeId2() {
+        return productTypeId2;
+    }
+
+    public void setProductTypeId2(int productTypeId2) {
+        this.productTypeId2 = productTypeId2;
+    }
+
+    public float getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(float discount) {
+        this.discount = discount;
+    }
 
     public int getProductId() {
         return productId;
@@ -55,12 +78,12 @@ public class Product {
         this.inventory = inventory;
     }
 
-    public String getImgURL() {
-        return imgURL;
+    public String getLogo() {
+        return logo;
     }
 
-    public void setImgURL(String imgURL) {
-        this.imgURL = imgURL;
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 
     public int getHeat() {
@@ -87,19 +110,21 @@ public class Product {
         this.state = state;
     }
 
-    public int getProductTypeId() {
-        return productTypeId;
-    }
-
-    public void setProductTypeId(int productTypeId) {
-        this.productTypeId = productTypeId;
-    }
-
-    public int getProductTypeId2() {
-        return productTypeId2;
-    }
-
-    public void setProductTypeId2(int productTypeId2) {
-        this.productTypeId2 = productTypeId2;
+    @Override
+    public String toString() {
+        return "Product{" +
+                "productId=" + productId +
+                ", productTypeId=" + productTypeId +
+                ", productTypeId2=" + productTypeId2 +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", collectTimes=" + collectTimes +
+                ", inventory=" + inventory +
+                ", logo='" + logo + '\'' +
+                ", heat=" + heat +
+                ", mark=" + mark +
+                ", state=" + state +
+                ", discount=" + discount +
+                '}';
     }
 }

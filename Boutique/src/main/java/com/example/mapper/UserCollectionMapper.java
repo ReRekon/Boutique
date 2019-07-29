@@ -11,7 +11,9 @@ import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 
 import com.example.entity.UserCollection;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface UserCollectionMapper {
 
     @Insert("INSERT INTO `user_collection` ( `t_id`, `u_id`, `uc_time`, `state`) VALUES"
@@ -20,7 +22,7 @@ public interface UserCollectionMapper {
     int save(UserCollection userCollection);
 
     @Delete("DELETE FROM user_collection WHERE uc_id =#{id}")
-    int del(@Param("id") long id);
+    int del(@Param("id") int id);
 
     @Select("select * from user_collection  WHERE u_id =#{id} ORDER BY uc_time desc")
     @Results(value = { @Result(id = true, property = "userCollectionId", column = "uc_id"),
@@ -28,5 +30,5 @@ public interface UserCollectionMapper {
                        @Result(property = "userId", column = "u_id"),
                        @Result(property = "enterTime", column = "uc_time"),
                        @Result(property = "state", column = "state") })
-    List<UserCollection> list(@Param("id") long id);
+    List<UserCollection> list(@Param("id") int id);
 }

@@ -13,19 +13,19 @@
             <result column="mark"  property="mark" />
             <result column="state"  property="state" />
             <result column="discount"  property="discount" />
-            <result column="c_id" property="productSpecificationId"/>
+            <!--<result column="c_id" property="productSpecificationId"/>-->
         </resultMap>
     <resultMap id="productSpecificationResultMap" type="com.example.entity.ProductSpecification">
         <result property="productSpecificationId" column="gs_id"/>
         <result property="productId" column="t_id"/>
         <result property="description" column="gd_desc"/>
         <result property="price" column="t_price"/>
-        <association property="productImage" javaType="com.example.entity.ProductImage" column="productId">
-            <result property="productImageId" column="id"/>
-            <result property="imageURL" column="pro_image"/>
-            <result property="state" column="state"/>
-            <result property="description" column="decription"/>
-        </association>
+        <!--<association property="productImage" javaType="com.example.entity.ProductImage" column="productId">-->
+            <!--<result property="productImageId" column="id"/>-->
+            <!--<result property="imageURL" column="pro_image"/>-->
+            <!--<result property="state" column="state"/>-->
+            <!--<result property="description" column="decription"/>-->
+        <!--</association>-->
     </resultMap>
     <resultMap id="productImageResultMap" type="com.example.entity.ProductImage">
         <result property="productImageId" column="id"/>

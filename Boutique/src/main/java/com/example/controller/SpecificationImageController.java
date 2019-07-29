@@ -1,7 +1,7 @@
 package com.example.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.example.service.impl.SpecificationImageService;
+import com.example.service.impl.SpecificationImageServiceImpl;
 import com.example.entity.SpecificationImage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +17,7 @@ import java.util.List;
 public class SpecificationImageController {
 
     @Autowired
-    private SpecificationImageService specificationImageService;
+    private SpecificationImageServiceImpl specificationImageService;
 
     @RequestMapping("/addSpecificationImage")
     @ResponseBody

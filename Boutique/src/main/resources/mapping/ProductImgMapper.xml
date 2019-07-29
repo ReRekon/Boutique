@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.ProductImageMapper">
 
-    <resultMap id="ProductImageResultMap" type="com.example.unifyEntity.ProductImage">
+    <resultMap id="ProductImageResultMap" type="com.example.entity.ProductImage">
         <result column="id"  property="productImageId" />
         <result column="t_id"  property="procuctId" />
         <result column="pro_image"  property="imageURL" />
@@ -10,7 +10,7 @@
         <result column="state"  property="state" />
     </resultMap>
 
-    <insert id="add"  parameterType="com.example.unifyEntity.ProductImage" useGeneratedKeys="true" keyProperty="productImageId"  >
+    <insert id="add" parameterType="com.example.entity.ProductImage" useGeneratedKeys="true" keyProperty="productImageId"  >
         insert into product_image (t_id,pro_image,decription
             <set>
                 <if test="state!=1">,state</if>
@@ -27,7 +27,7 @@
         delete from product_image where id = #{productImageId}
     </delete>
 
-    <update id="update" parameterType="com.example.unifyEntity.ProductImage" >
+    <update id="update" parameterType="com.example.entity.ProductImage" >
         update product_image
         <set>
             <if test="productImageId != null"> id=#{productImageId},</if>

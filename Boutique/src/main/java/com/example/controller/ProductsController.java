@@ -3,7 +3,7 @@ package com.example.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.example.entity.Product;
 
-import com.example.service.ProductsService;
+
 import com.example.service.impl.ProductsServiceImpl;
 import com.example.vo.Products;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.List;
+
 
 @Controller
 @RequestMapping("/product")

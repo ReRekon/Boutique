@@ -5,7 +5,7 @@
 
     <!--查询焦点图-->
     <select id="queryFocusImage" resultType="com.example.entity.FocusImage">
-        select * from focus_image limit 5;
+        select * from foucs_image limit 5;
     </select>
 
 

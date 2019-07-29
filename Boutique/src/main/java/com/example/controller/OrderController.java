@@ -1,8 +1,8 @@
 package com.example.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.example.service.impl.OrderServiceImpl;
 import com.example.vo.ReturnOrder;
+import com.example.service.impl.OrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,7 +44,6 @@ public class OrderController
         return orderServiceImpl.deleteOrder(orderId);
     }
 
-    @RequestMapping("/findAllOrders")
     public ReturnOrder findAllOrders(){
         return orderServiceImpl.findAllOrders();
     }

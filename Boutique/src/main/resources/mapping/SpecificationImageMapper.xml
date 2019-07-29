@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.SpecificationImageMapper">
 
-    <resultMap id="SpecificationImageResultMap" type="com.example.unifyEntity.SpecificationImage">
+    <resultMap id="SpecificationImageResultMap" type="com.example.entity.SpecificationImage">
         <result column="id"  property="specificationImageId" />
         <result column="gs_id"  property="productId" />
         <result column="sp_image"  property="imageURL" />
@@ -10,7 +10,7 @@
         <result column="state"  property="state" />
     </resultMap>
 
-    <insert id="add"  parameterType="com.example.unifyEntity.SpecificationImage" useGeneratedKeys="true" keyProperty="specificationImageId"  >
+    <insert id="add" parameterType="com.example.entity.SpecificationImage" useGeneratedKeys="true" keyProperty="specificationImageId"  >
         insert into specifiction_image (gs_id,sp_image,decription
         <set>
             <if test="state!=1">,state</if>
@@ -27,7 +27,7 @@
         delete from specifiction_image where id = #{specificationImageId}
     </delete>
 
-    <update id="update" parameterType="com.example.unifyEntity.SpecificationImage" >
+    <update id="update" parameterType="com.example.entity.SpecificationImage" >
         update specifiction_image
         <set>
             <if test="productId != null"> gs_id=#{productId},</if>

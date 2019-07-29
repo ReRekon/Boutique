@@ -11,9 +11,6 @@
         <result column="u_tel" property="tel"/>
         <result column="u_vip" property="vip"/>
         <result column="state" property="state"/>
-        <result column="createtime" property="createtime"/>
-        <result column="updatetime" property="updatetime"/>
-        <result column="otpcode" property="otpcode"/>
     </resultMap>
     <resultMap id="comment" type="com.example.entity.Comment">
         <id column="id" property="commentId"/>
@@ -23,7 +20,7 @@
         <result column="image_path" property="imageURL"/>
         <result column="description" property="description"/>
         <result column="time" property="time"/>
-        <result column="fatherid" property="fatherId"/>
+        <result column="star" property="star"/>
     </resultMap>
     <resultMap id="order" type="com.example.entity.Order">
         <id column="o_id" property="orderId"/>
@@ -62,7 +59,7 @@
         <result column="time" property="replyTime"/>
      </resultMap>
 
-    <insert id="addComment" parameterType="com.example.entity.Comment">
+    <insert id="addComment">
         insert into comment(t_id,o_id,u_id,image_path,description,time,star,state)
         values ((select t_id from user_order where o_id=(select o_id from orders where o_number=#{orderId})),
                 (select o_id from orders where o_number=#{orderId}),

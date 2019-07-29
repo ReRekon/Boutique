@@ -19,7 +19,6 @@ import com.github.pagehelper.PageInfo;
 @RestController
 @RequestMapping("/usercollection")
 public class UserCollectionController {
-
     @Autowired
     private UserCollections userCollections;
 
@@ -30,14 +29,14 @@ public class UserCollectionController {
     }
 
     @RequestMapping("/del/usercollection/{id}")
-    public Boolean delUserCollection(@PathVariable  long id) {
+    public Boolean delUserCollection(@PathVariable  int id) {
         return userCollections.delUserCollection(id);
     }
 
-    @RequestMapping("/list/usercollection")
+    @RequestMapping("/list/usercollection/{id}")
     public Object listUserCollection(@RequestParam(value = "page", defaultValue = "1") int page,
                                      @RequestParam(value = "size", defaultValue = "10") int size,
-                                     long id) {
+                                     @PathVariable int id) {
 
         PageHelper.startPage(page, size);
         List<UserCollection> listUserCollection = userCollections.listUserCollection(id);
@@ -47,6 +46,6 @@ public class UserCollectionController {
         data.put("total_page", pageInfo.getPages());//总页数
         data.put("current_page", page);//当前页
         data.put("data", pageInfo.getList());//数据
-        return data;
+        return data.toString();
     }
 }

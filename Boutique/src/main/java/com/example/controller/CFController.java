@@ -7,15 +7,15 @@ import com.example.entity.Product;
 import com.example.service.impl.CFServiceImpl;
 import com.example.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
-@Controller
+@RestController
 @RequestMapping("/user")
 public class CFController {
     @Autowired
@@ -24,25 +24,23 @@ public class CFController {
     @Autowired
     private HttpServletRequest request;
 
-    //获取用户Id
-    HttpSession session=request.getSession();
-    Admin admin=(Admin)session.getAttribute("Admin");
-    List<Result> results = cfServiceImpl.findProductIdAndNumberByAdminId(admin.getUserId());
+
 
     //根据用户Id获取猜你喜欢物品
     @RequestMapping("/gyl")
-    public void GuessYouLikes(){
-
+    public String GuessYouLikes(){
+        //获取用户Id
+//        HttpSession session=request.getSession();
+//        Admin admin=(Admin)session.getAttribute("Admin");
+        List<Result> result = cfServiceImpl.findProductIdAndNumberByAdminId(1);
         Map<Integer,Integer> maps = new HashMap();
-        for(Result results: results){
+        for(Result results: result){
             if(maps.containsKey(results.getProductId())){
                 maps.put(results.getProductId(),maps.get(results.getProductId()) + results.getNumber());
             }else{
                 maps.put(results.getProductId(), results.getNumber());
             }
         }
-
-//        sortMapByValueService.sortByValue(maps);
         List<Integer> type = new ArrayList<>();
         Set keySet = maps.keySet();
         Iterator it = keySet.iterator();
@@ -57,8 +55,8 @@ public class CFController {
             guessYouLikes =cfServiceImpl.findGuessYouLike(last);
         }
 
-        //Iterator<Product> things = guessYouLikes.iterator();
-        String s = JSONObject.toJSONString(guessYouLikes);
+
+        return JSONObject.toJSONString(guessYouLikes);
     }
 
 }

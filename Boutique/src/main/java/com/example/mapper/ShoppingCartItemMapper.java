@@ -4,6 +4,7 @@ package com.example.mapper;
 import com.example.entity.Product;
 import com.example.entity.ShoppingCart;
 import com.example.entity.ShoppingCartItem;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
@@ -44,7 +45,7 @@ public interface ShoppingCartItemMapper {
 
 
     //通过购物项id修改数量
-    int updataNumByGid(int id,Long num,BigDecimal totalprice,BigDecimal finalprice);
+    int updataNumByGid(@Param("id") int id,@Param("num") Long num,@Param("totalprice") BigDecimal totalprice,@Param("finalprice") BigDecimal finalprice);
 
 
     //通过购物项id删除对应的购物项
@@ -56,7 +57,8 @@ public interface ShoppingCartItemMapper {
     //通过用户输入的模糊商品名查到所有的商品
     List<Product> findProductsByName(String name);
 
-
+    //检验一个用户是否只是一个购物车
+    List<ShoppingCart> checkoutShopCartByUid(int id);
 
 
 }

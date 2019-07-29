@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class Products {
-    private  Product product;
+    private Product product;
     private ArrayList<ProductSpecification> productSpecification;
     private BigDecimal price;
     private ArrayList<String> img;

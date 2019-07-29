@@ -10,7 +10,7 @@ public class Comment {
     private int state;
     private int description;
 	private String time;
-    private int star;
+	private int star;
 
     public int getCommentId() {
         return commentId;

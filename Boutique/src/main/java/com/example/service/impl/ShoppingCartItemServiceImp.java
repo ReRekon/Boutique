@@ -20,15 +20,29 @@ public class ShoppingCartItemServiceImp implements ShoppingCartItemService {
     ShoppingCartItemMapper shoppingCartItemMapper;
 
 
+
     //通过用户id创建与用户相对应的购物车
     public void addCartByUid(int id){
 
-        ShoppingCart shoppingCart=new ShoppingCart();
+        int tag=1;
+        List<ShoppingCart> shoppingCartList=new ArrayList();
+        shoppingCartList=shoppingCartItemMapper.checkoutShopCartByUid(id);
 
-        shoppingCart.setUserId(id);
+        for (ShoppingCart sc:shoppingCartList) {
 
-      //  ShoppingCart.setUserId(id);
-        shoppingCartItemMapper.insertCart(shoppingCart);
+            if(sc.getUserId()==id){
+                tag=0;
+                break;
+            }
+        }
+        if(tag==1){
+            ShoppingCart shoppingCart=new ShoppingCart();
+            shoppingCart.setUserId(id);
+            shoppingCartItemMapper.insertCart(shoppingCart);
+        }
+        else {
+            System.out.println("一个用户只能对应一个购物车");
+        }
 
     }
 
@@ -70,6 +84,8 @@ public class ShoppingCartItemServiceImp implements ShoppingCartItemService {
         int shopcart=shoppingCartItemMapper.findCartByUid(id);
         shoppingCartItem.setShoppingCartId(shopcart);
 
+        System.out.println("*********商品库存");
+        System.out.println(shoppingCartItemMapper.findInventoryByPid(id));
 
 //        通过商品id查到商品的库存,然后先判断库存是否大于用户选择的数量，再添加
         if(shoppingCartItemMapper.findInventoryByPid(id)>num){
@@ -102,8 +118,8 @@ public class ShoppingCartItemServiceImp implements ShoppingCartItemService {
             }
 
             /*
-            若flag=1：购物车项里面 没有 用户所要加的商品 此时要添加新的购物车项
-            若flag=0：购物车项里面  有 用户要加的商品
+            若flag=1：购物车项里面 没有 用户所要加的商品 此时要 添加 新的购物车项
+            若flag=0：购物车项里面  有 用户要加的商品 此时应该 修改 购物车项的数量
              */
             if(flag==1){
 
@@ -133,31 +149,49 @@ public class ShoppingCartItemServiceImp implements ShoppingCartItemService {
                 System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&");
                 System.out.println(finalprice);
 
-                shoppingCartItem.setFinalPrice(finalprice.multiply(num1));
+                shoppingCartItem.setFinalPrice(finalprice);
                 shoppingCartItemMapper.addShopItem(shoppingCartItem);
             }
             else{
 
-//              此时应该是修改数量
-                BigDecimal price1=shoppingCartItemMapper.findPriceBySid(psid);
-                BigDecimal num1=BigDecimal.valueOf(num);
-                BigDecimal totalprice1=price1.multiply(num1);
+                if(num!=0){
+                   // 此时应该是修改数量
+                    BigDecimal price1=shoppingCartItemMapper.findPriceBySid(psid);
+//                    BigDecimal num1=BigDecimal.valueOf(num);
 
+                    System.out.println("@@@@@@@@@@@@@@@@@@@@@@用户选择修改了数量");
+                    System.out.println(num);
+                    BigDecimal num1=BigDecimal.valueOf(num);
+                    System.out.println(num1
+                    );
+                    BigDecimal totalprice1=price1.multiply(num1);
+
+                    System.out.println("!!!!!!!!!修改后的总价格");
+                    System.out.println(totalprice1);
 //              将折扣discount的类型float改为bigdecimal
-                Float discount=shoppingCartItemMapper.findDiscountByPid(productid);
-                BigDecimal discount1=BigDecimal.valueOf(discount);
+                    Float discount=shoppingCartItemMapper.findDiscountByPid(productid);
+                    BigDecimal discount1=BigDecimal.valueOf(discount);
 //              计算折后价
-                BigDecimal finalprice1=discount1.multiply(totalprice1);
-                System.out.println("###########################");
-                System.out.println(gid);
+                    BigDecimal finalprice1=discount1.multiply(totalprice1);
+                    System.out.println("#################购物车项id");
+                    System.out.println(gid);
 
-                //若数量变为0，那么删除该购物项，否则就只修改商品数量
-                if(num==0){
-                    shoppingCartItemMapper.deleteByGid(gid);
+                    System.out.println("@@@@@@@@@折扣后的价格");
+                    System.out.println(finalprice1);
+                    shoppingCartItemMapper.updataNumByGid(sid,num,totalprice1,finalprice1);
+
                 }
                 else {
-                    shoppingCartItemMapper.updataNumByGid(sid,num,totalprice1,finalprice1);
+                    //若数量变为0，那么删除该购物项，否则就只修改商品数量
+                    shoppingCartItemMapper.deleteByGid(gid);
                 }
+////
+//                if(num==0){
+//                    shoppingCartItemMapper.deleteByGid(gid);
+//                }
+//                else {
+//                    shoppingCartItemMapper.updataNumByGid(sid,num,totalprice1,finalprice1);
+//                }
 
             }
 

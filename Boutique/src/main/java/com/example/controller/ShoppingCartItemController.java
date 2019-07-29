@@ -25,12 +25,13 @@ public class ShoppingCartItemController {
     /**
      *通过用户id创建用户对应的购物车
      */
-    @RequestMapping("/user")
-    public String getShopCartByUid(){
+    @RequestMapping("/user/{id}")
+    @ResponseBody
+    public String getShopCartByUid(@PathVariable int id){
 
-        HttpSession session=request.getSession();
-        Admin admin=(Admin) session.getAttribute("Admin");
-        int id=admin.getUserId();
+//        HttpSession session=request.getSession();
+//        Admin admin=(Admin) session.getAttribute("Admin");
+//        int id=admin.getUserId();
         shoppingCartItemServiceImp.addCartByUid(id);
         return "index";
     }
@@ -39,13 +40,13 @@ public class ShoppingCartItemController {
      *通过用户id查询购物车里面所有的商品
      */
 
-    @RequestMapping("/get")
+    @RequestMapping("/get/{id}")
     @ResponseBody
-    public String getShop(){
+    public String getShop(@PathVariable int id){
 
-        HttpSession session=request.getSession();
-        Admin admin=(Admin) session.getAttribute("Admin");
-        int id=admin.getUserId();
+//        HttpSession session=request.getSession();
+//        Admin admin=(Admin) session.getAttribute("Admin");
+//        int id=admin.getUserId();
         List<ShoppingCartItem> shoppingCartItemList= shoppingCartItemServiceImp.getShoppingCart(id);
         return JSONObject.toJSONString(shoppingCartItemList);
     }
@@ -55,21 +56,22 @@ public class ShoppingCartItemController {
      * 通过商品id，商品数量，商品规格id，用户id添加对应的购物车项
      */
     @RequestMapping("/add")
-    public String addShop(){
-//    public String addShop(@RequestParam int productid,@RequestParam int psid,
-//                          @RequestParam Long num,@RequestParam int id){
-        HttpSession session=request.getSession();
-        Admin admin=(Admin) session.getAttribute("Admin");
-        int id=admin.getUserId();
-        //        获取前端传过来的商品id
-        int productid=Integer.valueOf(request.getParameter("pid"));
-//        获取前端传过来的商品数量
-        Long num=Long.valueOf(request.getParameter("num"));
-//        获取前端穿过来的商品规格id
-        int psid=Integer.valueOf(request.getParameter("psid"));
+   @ResponseBody
+//    public String addShop(){
+    public String addShop(@RequestParam int productid,@RequestParam int psid,
+                          @RequestParam Long num,@RequestParam int id){
+//        HttpSession session=request.getSession();
+//        Admin admin=(Admin) session.getAttribute("Admin");
+//        int id=admin.getUserId();
+//        //        获取前端传过来的商品id
+//        int productid=Integer.valueOf(request.getParameter("pid"));
+////        获取前端传过来的商品数量
+//        Long num=Long.valueOf(request.getParameter("num"));
+////        获取前端穿过来的商品规格id
+//        int psid=Integer.valueOf(request.getParameter("psid"));
 
         shoppingCartItemServiceImp.addShopItem(productid,psid,num,id);
-        return "index";
+        return "ok";
     }
 
 //    @RequestMapping("/add")
@@ -98,9 +100,9 @@ public class ShoppingCartItemController {
      */
     @ResponseBody
     @RequestMapping("/allproducts")
-    public String getAllproducts(){
+    public String getAllproducts(@RequestParam String name){
 
-        String name=request.getParameter("name");
+//        String name=request.getParameter("name");
 //        return shoppingCartItemServiceImp.getAllProductByName(name).toString();
         return JSONObject.toJSONString(shoppingCartItemServiceImp.getAllProductByName(name));
     }

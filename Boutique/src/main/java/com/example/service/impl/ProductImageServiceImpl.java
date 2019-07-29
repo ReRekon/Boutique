@@ -1,6 +1,7 @@
 package com.example.service.impl;
 
 import com.example.mapper.ProductImageMapper;
+import com.example.service.ProductImageService;
 import com.example.entity.ProductImage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ProductImageService {
+public class ProductImageServiceImpl implements ProductImageService {
 
     @Autowired
     ProductImageMapper productImageMapper;

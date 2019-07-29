@@ -3,7 +3,7 @@
 <mapper namespace="com.example.mapper.ShoppingCartItemMapper">
 
     <!--购物车项-->
-    <resultMap id="shopItemResultMap" type="com.example.unifyEntity.ShoppingCartItem">
+    <resultMap id="shopItemResultMap" type="com.example.entity.ShoppingCartItem">
         <result column="gi_id" javaType="Integer"  property="shoppingCartItemId" />
         <result column="t_id" javaType="Integer" property="productId" />
         <result column="sc_id" javaType="Integer" property="shoppingCartId" />
@@ -16,7 +16,7 @@
     </resultMap>
 
     <!--商品规格-->
-    <resultMap id="shopSpecificationResultMap" type="com.example.unifyEntity.ProductSpecification">
+    <resultMap id="shopSpecificationResultMap" type="com.example.entity.ProductSpecification">
         <result column="gs_id"  property="productSpecificationId" />
         <result column="t_id"  property="productId" />
         <result column="gd_desc"  property="description" />
@@ -24,13 +24,13 @@
     </resultMap>
 
     <!--购物车-->
-    <resultMap id="shoppingCartResultMap" type="com.example.unifyEntity.ShoppingCart">
+    <resultMap id="shoppingCartResultMap" type="com.example.entity.ShoppingCart">
         <result column="sc_id" javaType="Integer" property="shoppingCartId" />
         <result column="u_id" javaType="Integer" property="userId" />
     </resultMap>
 
     <!--商品-->
-    <resultMap id="productResultMap" type="com.example.unifyEntity.Product">
+    <resultMap id="productResultMap" type="com.example.entity.Product">
         <result column="t_id" javaType="Integer" property="productId" />
 
         <result column="t_name" javaType="String" property="name" />
@@ -44,7 +44,7 @@
         <result column="logo" javaType="String" property="logo" />
     </resultMap>
 
-    <resultMap id="cartResultMap" type="com.example.unifyEntity.ShoppingCart">
+    <resultMap id="cartResultMap" type="com.example.entity.ShoppingCart">
         <result column="sc_id" javaType="Integer" property="shoppingCartId"/>
         <result column="u_id" javaType="Integer" property="userId"/>
     </resultMap>
@@ -70,12 +70,12 @@
     </delete>
 
     <!--添加商品到购物项-->
-    <insert id="addShopItem" parameterType="com.example.unifyEntity.ShoppingCartItem">
+    <insert id="addShopItem" parameterType="com.example.entity.ShoppingCartItem">
         insert into goods_item values (null,#{productId},#{shoppingCartId},#{productSpecificationId},
         #{number},#{state},#{finalPrice},#{logo},#{totalPrice})
     </insert>
 
-    <update id="updataNumByGid" parameterType="com.example.unifyEntity.ShoppingCartItem" >
+    <update id="updataNumByGid" parameterType="com.example.entity.ShoppingCartItem" >
         update goods_item set t_num=#{num},total_prirce=#{totalprice},final_pay=#{finalprice} where gi_id=#{id}
     </update>
 
@@ -109,5 +109,9 @@
         select * from product where t_name like "%"#{name}"%"
     </select>
 
+    <!--通过用户id查到购物车对象-->
+    <select id="checkoutShopCartByUid" parameterType="Integer" resultMap="shoppingCartResultMap" >
+    select * from shop_cart where u_id=#{id}
+    </select>
 
 </mapper>

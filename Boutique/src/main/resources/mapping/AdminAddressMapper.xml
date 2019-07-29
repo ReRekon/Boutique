@@ -15,7 +15,7 @@
         <result column="state"  property="state" />
     </resultMap>
 
-    <insert id="add"  parameterType="com.example.entity.AdminAddress" useGeneratedKeys="true" keyProperty="aa_id"  >
+    <insert id="add" parameterType="com.example.entity.AdminAddress" useGeneratedKeys="true" keyProperty="aa_id"  >
         insert into admin_adress (u_id,aa_name,telephone,province,city,area,street,aa_adress,state)value
           ((select u_id from admin where u_name = #{uname}),#{name},#{telephone},#{province},
           #{city},#{area},#{street},#{adress},#{state})

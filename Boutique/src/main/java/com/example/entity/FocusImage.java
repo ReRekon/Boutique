@@ -1,12 +1,10 @@
 package com.example.entity;
 
 public class FocusImage {
-
-    private int f_id;
-    private String image;
+	private int f_id;
+	private String image;       
     private String description;
     private int state;
-
 
     public int getF_id() {
         return f_id;

@@ -1,24 +1,24 @@
 package com.example.entity;
 
 public class ProductType {
-    private String productTypeId;
-    private String productType;
+    private int productTypeId;
+    private String ProductTypeName;
     private int state;
 
-    public String getProductTypeId() {
+    public int getProductTypeId() {
         return productTypeId;
     }
 
-    public void setProductTypeId(String productTypeId) {
+    public void setProductTypeId(int productTypeId) {
         this.productTypeId = productTypeId;
     }
 
-    public String getProductType() {
-        return productType;
+    public String getProductTypeName() {
+        return ProductTypeName;
     }
 
-    public void setProductType(String productType) {
-        this.productType = productType;
+    public void setProductTypeName(String productTypeName) {
+        ProductTypeName = productTypeName;
     }
 
     public int getState() {
@@ -27,5 +27,14 @@ public class ProductType {
 
     public void setState(int state) {
         this.state = state;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductType{" +
+                "productTypeId=" + productTypeId +
+                ", ProductTypeName='" + ProductTypeName + '\'' +
+                ", state=" + state +
+                '}';
     }
 }

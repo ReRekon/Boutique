@@ -6,6 +6,19 @@ public class AdminBankCard {
     private String type;
     private String number;
 
+    public AdminBankCard() {
+    }
+
+    @Override
+    public String toString() {
+        return "AdminBankCard{" +
+                "userBankcardId=" + userBankcardId +
+                ", userId=" + userId +
+                ", type='" + type + '\'' +
+                ", number='" + number + '\'' +
+                '}';
+    }
+
     public int getUserBankcardId() {
         return userBankcardId;
     }
@@ -35,6 +48,13 @@ public class AdminBankCard {
     }
 
     public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public AdminBankCard(int userBankcardId, int userId, String type, String number) {
+        this.userBankcardId = userBankcardId;
+        this.userId = userId;
+        this.type = type;
         this.number = number;
     }
 }

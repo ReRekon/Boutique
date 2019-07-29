@@ -4,7 +4,7 @@ public class CommentReply {
     private int replyId;
     private int commentId;
     private String ReplyConnect;
-    private String replyTime;
+    private String ReplyTime;
 
     public int getReplyId() {
         return replyId;
@@ -31,10 +31,10 @@ public class CommentReply {
     }
 
     public String getReplyTime() {
-        return replyTime;
+        return ReplyTime;
     }
 
     public void setReplyTime(String replyTime) {
-        this.replyTime = replyTime;
+        ReplyTime = replyTime;
     }
 }

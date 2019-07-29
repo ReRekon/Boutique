@@ -1,6 +1,7 @@
 package com.example.service.impl;
 
 import com.example.mapper.SpecificationImageMapper;
+import com.example.service.SpecificatoinImageService;
 import com.example.entity.SpecificationImage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class SpecificationImageService {
+public class SpecificationImageServiceImpl implements SpecificatoinImageService {
 
     @Autowired
     SpecificationImageMapper specificationImageMapper;

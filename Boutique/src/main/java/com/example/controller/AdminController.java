@@ -167,7 +167,7 @@ public class AdminController {
         }
     }
 
-    //校验邮箱是否被占用
+    //校验手机号是否被占用
     @RequestMapping(value = "/checkTel")
     @ResponseBody
     public Boolean checkEmail(@RequestParam String tel) {

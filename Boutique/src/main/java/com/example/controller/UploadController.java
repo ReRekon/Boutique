@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import com.example.service.UploadService;
+import com.example.service.impl.UploadServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +27,7 @@ public class UploadController {
 
 
     @Autowired
-    private UploadService uploadService;
+    private UploadServiceImpl uploadService;
 
     @Value("${baseUploadUrl}")
     private String url;

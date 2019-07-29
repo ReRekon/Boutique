@@ -8,7 +8,7 @@ public interface UserCollections {
 
     public Boolean saveUserCollection(UserCollection userCollection);
 
-    public Boolean delUserCollection(long id);
+    public Boolean delUserCollection(int id);
 
-    public List<UserCollection> listUserCollection(long id);
+    public List<UserCollection> listUserCollection(int id);
 }
