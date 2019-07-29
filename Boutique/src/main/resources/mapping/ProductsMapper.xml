@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.ProductsMapper">
+    <!--一个商品对应多个规格 -->
+        <resultMap id="productResultMap" type="com.example.entity.Product">
+            <result column="t_id"  property="productId" />
+            <result column="t_name"  property="name" />
+            <result column="t_dis"  property="description" />
+            <result column="t_coll_count"  property="collectTimes" />
+            <result column="inventory"  property="inventory" />
+            <result column="logo"  property="logo" />
+            <result column="heat"  property="heat" />
+            <result column="mark"  property="mark" />
+            <result column="state"  property="state" />
+            <result column="discount"  property="discount" />
+            <result column="c_id" property="productSpecificationId"/>
+        </resultMap>
+    <resultMap id="productSpecificationResultMap" type="com.example.entity.ProductSpecification">
+        <result property="productSpecificationId" column="gs_id"/>
+        <result property="productId" column="t_id"/>
+        <result property="description" column="gd_desc"/>
+        <result property="price" column="t_price"/>
+        <association property="productImage" javaType="com.example.entity.ProductImage" column="productId">
+            <result property="productImageId" column="id"/>
+            <result property="imageURL" column="pro_image"/>
+            <result property="state" column="state"/>
+            <result property="description" column="decription"/>
+        </association>
+    </resultMap>
+    <resultMap id="productImageResultMap" type="com.example.entity.ProductImage">
+        <result property="productImageId" column="id"/>
+        <result property="imageURL" column="pro_image"/>
+        <result property="state" column="state"/>
+        <result property="description" column="decription"/>
+        <result property="productId" column="t_id"/>
+    </resultMap>
+    <!--历史记录-->
+    <resultMap id="historyResultMap" type="com.example.entity.History">
+        <result column="id"  property="historyId" />
+        <result column="u_id"  property="userId" />
+        <result column="state"  property="state" />
+        <result column="t_id"  property="productId" />
+        <result column="times"  property="times" />
+        <result column="numbers"  property="numbers" />
+    </resultMap>
+    <!--商品类型-->
+    <resultMap id="ProductTypeResultMap" type="com.example.entity.ProductType">
+        <result column="c_id"  property="productTypeId" />
+        <result column="c_name"  property="name" />
+        <result column="state"  property="state" />
+    </resultMap>
+
+       <select id="selectProduct" parameterType="Integer" resultMap="productResultMap" resultType="com.example.entity.Product">
+    select * from product where t_id=#{productId}
+    </select>
+
+
+    <!--<update id="upDateProduct" parameterType="com.example.entity.Product">-->
+        <!--update product set t_name=#{name},-->
+                           <!--t_dis=#{description},-->
+                           <!--t_coll_count=#{collectTimes},-->
+                           <!--inventory=#{inventory},-->
+                           <!--t_img=#{imgURL},-->
+                           <!--heat=#{heat},-->
+                           <!--mark=#{mark},-->
+                           <!--state=#{state},-->
+                           <!--discount=#{discount}-->
+               <!--where t_id = #{productId}-->
+    <!--</update>-->
+
+    <select id="selectHistory"  resultType="Integer" >
+        select id from history where t_id=#{param1} and u_id=#{param2}
+    </select>
+    <delete id="deleteHistory" >
+        delete from history where t_id=#{param1} and u_id=#{param2}
+    </delete>
+
+    <insert id="insertHistory" parameterType="com.example.entity.History" useGeneratedKeys="true" keyProperty="historyId">
+       insert into history (t_id,u_id,times,numbers,state)
+              values (#{productId},#{userId},#{times},#{numbers},#{state})
+ </insert>
+    <select id="selectAllHistory" parameterType="Integer" resultType="Integer" >
+        select t_id from history where u_id=#{userId} order by id desc
+    </select>
+     <select id="findAllImg" parameterType="Integer" resultType="String">
+         select pro_image from product_image where t_id=#{productId}
+     </select>
+    <select id="getDiscount" parameterType="Integer" resultType="Float">
+        select discount from product where t_id=#{productId}
+    </select>
+    <select id="getPrice" parameterType="Integer" resultType="BigDecimal">
+        select t_price from goods_specific where gs_id=#{productSpecificationId}
+    </select>
+
+    <!--根据规格id返回规格描述和价格-->
+    <select id="selectProductSpecification" resultMap="productSpecificationResultMap">
+        select * from goods_specific where t_id=#{productId}
+    </select>
+    <select id="selectmorenProductSpecification" resultMap="productSpecificationResultMap">
+                select * from goods_specific where t_id=#{productId} order by t_price  limit 1
+    </select>
+</mapper>

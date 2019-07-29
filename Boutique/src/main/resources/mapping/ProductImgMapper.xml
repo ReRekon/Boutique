@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.ProductImageMapper">
+
+    <resultMap id="ProductImageResultMap" type="com.example.unifyEntity.ProductImage">
+        <result column="id"  property="productImageId" />
+        <result column="t_id"  property="procuctId" />
+        <result column="pro_image"  property="imageURL" />
+        <result column="decription"  property="description" />
+        <result column="state"  property="state" />
+    </resultMap>
+
+    <insert id="add"  parameterType="com.example.unifyEntity.ProductImage" useGeneratedKeys="true" keyProperty="productImageId"  >
+        insert into product_image (t_id,pro_image,decription
+            <set>
+                <if test="state!=1">,state</if>
+            </set>
+        )value
+          (#{procuctId},#{imageURL},#{description}
+            <set>
+                <if test="state!=1">,#{state}</if>
+            </set>
+        )
+    </insert>
+
+    <delete id="delete"  parameterType="int" >
+        delete from product_image where id = #{productImageId}
+    </delete>
+
+    <update id="update" parameterType="com.example.unifyEntity.ProductImage" >
+        update product_image
+        <set>
+            <if test="productImageId != null"> id=#{productImageId},</if>
+            <if test="procuctId != null"> t_id=#{procuctId},</if>
+            <if test="imageURL != null"> pro_image=#{imageURL},</if>
+            <if test="description != null"> decription=#{description},</if>
+            <if test="state != null"> state=#{state}</if>
+        </set>
+        where id=#{productImageId}
+    </update>
+
+    <select id="findAll" parameterType="int" resultMap="ProductImageResultMap">
+        select * from product_image where t_id = #{procuctId}
+    </select>
+
+</mapper>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.GuessYouLikesMapper">
+
+
+    <resultMap id="orderitem" type="com.example.entity.OrderItem">
+        <id property="orderItemId" column="uo_id"  />
+        <result property="orderId" column="o_id" />
+        <result property="productId" column="t_id" />
+        <result property="number" column="uo_num" />
+        <result property="finalPrice" column="final_pay" />
+    </resultMap>
+
+    <resultMap id="order" type="com.example.entity.Order">
+        <id property="orderId" column="o_id"  />
+        <result property="userId" column="u_id" />
+        <result property="state" column="o_stauts" />
+        <result property="totalPrice" column="o_price" />
+        <result property="number" column="o_num" />
+        <result property="finalPrice" column="o_starttime" />
+        <result property="finishTime" column="o_finishtime" />
+        <result property="finalPrice" column="final_price" />
+        <result property="orderNumber" column="o_number" />
+    </resultMap>
+
+    <resultMap id="product" type="com.example.entity.Product">
+        <id property="productId" column="t_id"  />
+        <result property="productTypeId" column="c_id" />
+        <result property="name" column="t_name" />
+        <result property="description" column="t_dis" />
+        <result property="collectTimes" column="t_coll_count" />
+        <result property="inventory" column="inventroy" />
+        <result property="imgURL" column="t_img" />
+        <result property="heat" column="heat" />
+        <result property="mark" column="mark" />
+        <result property="state" column="state" />
+        <association property="orderItem" select="findProductByOrderItemId" column="uo_id" />
+    </resultMap>
+
+    <resultMap id="producttype" type="com.example.entity.ProductType">
+        <id property="productTypeId" column="c_id"  />
+        <result property="productType" column="c_name" />
+        <result property="state" column="state" />
+    </resultMap>
+
+    <resultMap id="result" type="com.example.entity.Result">
+        <result column="t_id" property="productId"/>
+        <result column="uo_num" property="number"/>
+    </resultMap>
+
+    <select id="findProductIdAndNumberByAdminId" resultMap="Result">
+        select uo.t_id,uo.uo_num from user_order uo,orders o where o.u_id = #{userId} and o.o_id = uo.o_id
+    </select>
+
+    <select id="resultProductTypeId"  parameterType="Integer" resultType="int">
+        select distinct c_id from product where t_id = #{productId}
+    </select>
+
+    <select id="findGuessYouLike" resultMap="product" >
+        select * from product where c_id=(select c_id from product where c_id =#{productTypeId}) order by heat desc limit 6;
+    </select>
+
+</mapper>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.AdminAddressMapper">
+
+    <resultMap id="AdminAddressResultMap" type="com.example.entity.AdminAddress">
+        <result column="aa_id"  property="userAddressid" />
+        <result column="u_id"  property="userId" />
+        <result column="aa_name"  property="name" />
+        <result column="telephone"  property="telephone" />
+        <result column="province"  property="province" />
+        <result column="city"  property="city" />
+        <result column="area"  property="area" />
+        <result column="street"  property="street" />
+        <result column="aa_adress"  property="adress" />
+        <result column="state"  property="state" />
+    </resultMap>
+
+    <insert id="add"  parameterType="com.example.entity.AdminAddress" useGeneratedKeys="true" keyProperty="aa_id"  >
+        insert into admin_adress (u_id,aa_name,telephone,province,city,area,street,aa_adress,state)value
+          ((select u_id from admin where u_name = #{uname}),#{name},#{telephone},#{province},
+          #{city},#{area},#{street},#{adress},#{state})
+    </insert>
+
+    <delete id="delete"  parameterType="int" >
+        delete from admin_adress where aa_id = #{aid}
+    </delete>
+
+    <update id="update" parameterType="com.example.entity.AdminAddress" >
+        update admin_adress
+        <set>
+            <if test="name != null"> aa_name=#{name},</if>
+            <if test="telephone != null"> telephone=#{telephone},</if>
+            <if test="province != null"> province=#{province},</if>
+            <if test="city != null"> city=#{city},</if>
+            <if test="area != null"> area=#{area},</if>
+            <if test="street != null"> street=#{street},</if>
+            <if test="adress != null">aa_adress=#{adress},</if>
+            <if test="state != null">state=#{state}</if>
+        </set>
+        where aa_id=#{userAddressid}
+    </update>
+
+    <select id="findAll" parameterType="String" resultMap="AdminAddressResultMap">
+        select * from admin_adress where u_id = (select u_id from admin where u_name=#{uname}) order by state
+    </select>
+
+    <!--<select id="findUserId" parameterType="Sreing" resultMap="AdminAddressResultMap">-->
+        <!--select u_id from admin where u_name = #{uname}-->
+    <!--</select>-->
+    <!--<select id="findone"  resultMap="BaseResultMap_1" parameterType="Integer">-->
+        <!--select * from  admin_adress where aa_id = #{aid}-->
+    <!--</select>-->
+
+</mapper>

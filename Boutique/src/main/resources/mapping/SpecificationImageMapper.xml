@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.SpecificationImageMapper">
+
+    <resultMap id="SpecificationImageResultMap" type="com.example.unifyEntity.SpecificationImage">
+        <result column="id"  property="specificationImageId" />
+        <result column="gs_id"  property="productId" />
+        <result column="sp_image"  property="imageURL" />
+        <result column="decription"  property="description" />
+        <result column="state"  property="state" />
+    </resultMap>
+
+    <insert id="add"  parameterType="com.example.unifyEntity.SpecificationImage" useGeneratedKeys="true" keyProperty="specificationImageId"  >
+        insert into specifiction_image (gs_id,sp_image,decription
+        <set>
+            <if test="state!=1">,state</if>
+        </set>
+        )value
+        (#{productId},#{imageURL},#{description}
+        <set>
+            <if test="state!=1">,#{state}</if>
+        </set>
+        )
+    </insert>
+
+    <delete id="delete"  parameterType="int" >
+        delete from specifiction_image where id = #{specificationImageId}
+    </delete>
+
+    <update id="update" parameterType="com.example.unifyEntity.SpecificationImage" >
+        update specifiction_image
+        <set>
+            <if test="productId != null"> gs_id=#{productId},</if>
+            <if test="imageURL != null"> sp_image=#{imageURL},</if>
+            <if test="description != null"> decription=#{description},</if>
+            <if test="state != null"> state=#{state},</if>
+        </set>
+        where id=#{specificationImageId}
+    </update>
+
+    <select id="findAll" parameterType="int" resultMap="SpecificationImageResultMap">
+        select * from specifiction_image where id = #{specificationImageId}
+    </select>
+
+    <!--<select id="findUserId" parameterType="Sreing" resultMap="AdminAddressResultMap">-->
+        <!--select u_id from admin where u_name = #{uname}-->
+    <!--</select>specifiction_image-->
+
+
+</mapper>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.ShoppingCartItemMapper">
+
+    <!--购物车项-->
+    <resultMap id="shopItemResultMap" type="com.example.unifyEntity.ShoppingCartItem">
+        <result column="gi_id" javaType="Integer"  property="shoppingCartItemId" />
+        <result column="t_id" javaType="Integer" property="productId" />
+        <result column="sc_id" javaType="Integer" property="shoppingCartId" />
+        <result column="gs_id" javaType="Integer"  property="productSpecificationId" />
+        <result column="t_num" javaType="Long" property="number" />
+        <result column="state" javaType="Integer"  property="state" />
+        <result column="final_pay" javaType="BigDecimal" property="finalPrice" />
+        <result column="total_prirce" javaType="BigDecimal" property="totalPrice" />
+        <result column="pro_imgage" javaType="String" property="imageURL"/>
+    </resultMap>
+
+    <!--商品规格-->
+    <resultMap id="shopSpecificationResultMap" type="com.example.unifyEntity.ProductSpecification">
+        <result column="gs_id"  property="productSpecificationId" />
+        <result column="t_id"  property="productId" />
+        <result column="gd_desc"  property="description" />
+        <result column="t_price"  property="price" />
+    </resultMap>
+
+    <!--购物车-->
+    <resultMap id="shoppingCartResultMap" type="com.example.unifyEntity.ShoppingCart">
+        <result column="sc_id" javaType="Integer" property="shoppingCartId" />
+        <result column="u_id" javaType="Integer" property="userId" />
+    </resultMap>
+
+    <!--商品-->
+    <resultMap id="productResultMap" type="com.example.unifyEntity.Product">
+        <result column="t_id" javaType="Integer" property="productId" />
+
+        <result column="t_name" javaType="String" property="name" />
+        <result column="t_dis" javaType="String" property="description" />
+        <result column="t_coll_count" javaType="Long" property="collectTimes" />
+        <result column="inventory" javaType="Long" property="inventory" />
+        <result column="heat" javaType="Integer" property="heat" />
+        <result column="mark" javaType="Float" property="mark" />
+        <result column="state" javaType="Integer" property="state" />
+        <result column="discount" javaType="Float" property="discount" />
+        <result column="logo" javaType="String" property="logo" />
+    </resultMap>
+
+    <resultMap id="cartResultMap" type="com.example.unifyEntity.ShoppingCart">
+        <result column="sc_id" javaType="Integer" property="shoppingCartId"/>
+        <result column="u_id" javaType="Integer" property="userId"/>
+    </resultMap>
+
+    <!--一个用户对应一个购物车-->
+    <insert id="insertCart" parameterType="Integer"  >
+        insert into shop_cart values (null,#{userId})
+    </insert>
+
+    <!--通过用户id查得购物车里面所有的商品-->
+    <select id="findByUid" parameterType="Integer" resultMap="shopItemResultMap">
+        SELECT * FROM goods_item WHERE sc_id=(SELECT sc_id FROM shop_cart WHERE u_id=#{id} )
+    </select>
+
+    <!--通过用户id删除购物车里面所有的商品-->
+    <delete id="deleteByUId" parameterType="Integer">
+        delete from goods_item where sc_id=(SELECT sc_id FROM shop_cart WHERE u_id=#{id})
+    </delete>
+
+    <!--通过购物车项id删除对应的购物车里的商品-->
+    <delete id="deleteByGid" parameterType="Integer">
+        delete from goods_item where gi_id=#{id}
+    </delete>
+
+    <!--添加商品到购物项-->
+    <insert id="addShopItem" parameterType="com.example.unifyEntity.ShoppingCartItem">
+        insert into goods_item values (null,#{productId},#{shoppingCartId},#{productSpecificationId},
+        #{number},#{state},#{finalPrice},#{logo},#{totalPrice})
+    </insert>
+
+    <update id="updataNumByGid" parameterType="com.example.unifyEntity.ShoppingCartItem" >
+        update goods_item set t_num=#{num},total_prirce=#{totalprice},final_pay=#{finalprice} where gi_id=#{id}
+    </update>
+
+    <!--通过商品规格id查得商品原价-->
+    <select id="findPriceBySid" parameterType="Integer" resultType="BigDecimal">
+        SELECT t_price FROM goods_specific WHERE gs_id=#{id}
+    </select>
+
+    <!--通过用户id查得用户的购物车-->
+   <select id="findCartByUid" parameterType="Integer" resultType="int">
+        select sc_id from shop_cart where u_id=#{id}
+    </select>
+
+    <!--通过商品id查得商品库存-->
+    <select id="findInventoryByPid" parameterType="Integer" resultType="Long">
+        select inventory from product where t_id=#{id}
+    </select>
+
+    <!--通过商品id查得商品的折扣-->
+    <select id="findDiscountByPid" parameterType="Integer" resultType="Float">
+        select discount from product where t_id=#{id}
+    </select>
+
+    <!--通过商品id在图片表里面的图片-->
+    <select id="findPictureByPid" parameterType="Integer" resultType="String">
+        select logo from product where t_id=#{id}
+    </select>
+
+    <!--通过个别商品名查到所有的商品-->
+    <select id="findProductsByName" parameterType="String" resultMap="productResultMap" >
+        select * from product where t_name like "%"#{name}"%"
+    </select>
+
+
+</mapper>

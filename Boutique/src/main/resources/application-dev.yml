@@ -1,0 +1,34 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    username: root
+    password: mysql
+    url: jdbc:mysql://localhost:3306/boutique?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    dbcp2:
+      initial-size: 5
+      min-idle: 5
+      max-total: 5
+      max-wait-millis: 200
+
+mybatis:
+  mapper-locations: classpath:mapping/*.xml
+  type-aliases-package: com.example.entity
+
+#showSql
+logging:
+  level:
+    com:
+      example:
+        mapper : debug
+
+#七牛云配置
+qiniu:
+  accessKey: r12H00a9wYygK8AtsTYx7TX1m1vrgjVTYrLb4urN
+  secretKey: rwuTCmVWrBhsN9rjV1JkAnXGxamSANtkGrNQqL-g
+  bucket: boutique
+  path: http://pv2vvw8an.bkt.clouddn.com
+baseUploadUrl: d://data/Smmer program/Picture/

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.FocusImageMapper">
+
+
+    <!--查询焦点图-->
+    <select id="queryFocusImage" resultType="com.example.entity.FocusImage">
+        select * from focus_image limit 5;
+    </select>
+
+
+</mapper>
