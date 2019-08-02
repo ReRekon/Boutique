@@ -1,14 +1,14 @@
 package com.example.service;
 
 
-import com.example.entity.History;
+
 import com.example.entity.Product;
 
 import com.example.entity.ProductSpecification;
-import com.example.mapper.ProductsMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.stereotype.Service;
+import com.example.vo.Historys;
+import com.example.vo.Products;
+
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -23,8 +23,8 @@ public interface ProductsService {
     //插入历史记录，查询到了删掉之前的，再插入
     public void updateHistory(Integer productId, Integer userId);
     //批量删除历史纪录
-    public  ArrayList<Product> deleteSomeHistory(List<Integer> list, Integer userId);
-    public ArrayList<Product> returnAllHistory(Integer productId, Integer userId);
+    public  ArrayList<Historys> deleteSomeHistory(List<Integer> list, Integer userId);
+    public ArrayList<Historys> returnAllHistory(Integer productId, Integer userId);
     //返回商品所有图片
       public ArrayList<String> returnAllImg(Integer productId);
       //返回商品折后价
@@ -35,4 +35,6 @@ public interface ProductsService {
     public ArrayList<ProductSpecification> returnProductSpecification(Integer productId);
     //返回默认规格和默认价格
     public ProductSpecification returnmorenProductSpecification(Integer productId);
+    //返回商品所有信息
+    public Products returnProduct(Integer productId);
 }

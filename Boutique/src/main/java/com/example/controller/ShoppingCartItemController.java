@@ -1,9 +1,9 @@
 package com.example.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.example.entity.Admin;
 import com.example.entity.ShoppingCartItem;
-import com.example.service.impl.ShoppingCartItemServiceImp;
+
+import com.example.service.ShoppingCartItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +17,7 @@ import java.util.List;
 public class ShoppingCartItemController {
 
     @Autowired
-    ShoppingCartItemServiceImp shoppingCartItemServiceImp;
+    ShoppingCartItemService shoppingCartItemService;
 
     @Autowired
     HttpServletRequest request;
@@ -32,7 +32,7 @@ public class ShoppingCartItemController {
 //        HttpSession session=request.getSession();
 //        Admin admin=(Admin) session.getAttribute("Admin");
 //        int id=admin.getUserId();
-        shoppingCartItemServiceImp.addCartByUid(id);
+        shoppingCartItemService.addCartByUid(id);
         return "index";
     }
 
@@ -47,8 +47,9 @@ public class ShoppingCartItemController {
 //        HttpSession session=request.getSession();
 //        Admin admin=(Admin) session.getAttribute("Admin");
 //        int id=admin.getUserId();
-        List<ShoppingCartItem> shoppingCartItemList= shoppingCartItemServiceImp.getShoppingCart(id);
-        return JSONObject.toJSONString(shoppingCartItemList);
+        List<ShoppingCartItem> shoppingCartItemList= shoppingCartItemService.getShoppingCart(id);
+//        return JSONObject.toJSONString(shoppingCartItemList);
+        return shoppingCartItemList.toString();
     }
 
 
@@ -70,7 +71,7 @@ public class ShoppingCartItemController {
 ////        获取前端穿过来的商品规格id
 //        int psid=Integer.valueOf(request.getParameter("psid"));
 
-        shoppingCartItemServiceImp.addShopItem(productid,psid,num,id);
+        shoppingCartItemService.addShopItem(productid,psid,num,id);
         return "ok";
     }
 
@@ -103,8 +104,8 @@ public class ShoppingCartItemController {
     public String getAllproducts(@RequestParam String name){
 
 //        String name=request.getParameter("name");
-//        return shoppingCartItemServiceImp.getAllProductByName(name).toString();
-        return JSONObject.toJSONString(shoppingCartItemServiceImp.getAllProductByName(name));
+        return shoppingCartItemService.getAllProductByName(name).toString();
+
     }
 
     /*
@@ -112,7 +113,7 @@ public class ShoppingCartItemController {
      */
     public void deleteShoppingCartItems(List<Integer> list)
     {
-       shoppingCartItemServiceImp.deleteItemByGid(list);
+        shoppingCartItemService.deleteItemByGid(list);
     }
 
 

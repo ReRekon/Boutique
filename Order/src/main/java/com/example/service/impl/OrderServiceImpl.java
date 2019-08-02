@@ -1,14 +1,11 @@
 package com.example.service.impl;
 
 
-import com.alibaba.fastjson.JSONObject;
 import com.example.entity.*;
 import com.example.mapper.OrderMapper;
 import com.example.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -33,15 +30,16 @@ public class OrderServiceImpl implements OrderService {
     private Product product;
 
 
-    public int insertOrder(@RequestBody JSONObject jsonObject)
+    public int insertOrder(Order order)
     {
-        Order order=jsonObject.toJavaObject(Order.class);
+        //Order order=jsonObject.toJavaObject(Order.class);
+        System.out.println(order.getFinishTime());
         return orderMapper.insertOrder(order);
     }
 
 
     //接受前端传给我的要处理的购物车的购物车项id
-    public ReturnOrder createOrderByShoppingCart(@PathVariable List<Integer> idList) {
+    public ReturnOrder createOrderByShoppingCart(List<Integer> idList) {
 
         HttpSession session = request.getSession();
         ReturnOrder returnOrder=new ReturnOrder();

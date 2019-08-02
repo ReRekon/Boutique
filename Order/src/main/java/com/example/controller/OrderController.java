@@ -1,7 +1,7 @@
 package com.example.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.example.entity.*;
+import com.example.service.OrderService;
 import com.example.service.impl.OrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,15 +16,16 @@ import java.util.*;
 public class OrderController
 {
     @Autowired
-    private OrderServiceImpl orderServiceImpl;
+    private OrderService orderServiceImpl;
 
+    @ResponseBody
     @RequestMapping("/insertOrder")
-    public int insertOrder(JSONObject jsonObject)
+    public int insertOrder(@RequestBody Order order)
     {
-       return  orderServiceImpl.insertOrder(jsonObject);
+       return  orderServiceImpl.insertOrder(order);
     }
 
-    @RequestMapping("/createOrderByShoppingCart")
+    @PostMapping("/createOrderByShoppingCart")
     public ReturnOrder createOrderByShoppingCart(List<Integer> idList){
         return orderServiceImpl.createOrderByShoppingCart(idList);
     }
@@ -44,6 +45,7 @@ public class OrderController
         return orderServiceImpl.deleteOrder(orderId);
     }
 
+    @RequestMapping("/findAllOrders")
     public ReturnOrder findAllOrders(){
         return orderServiceImpl.findAllOrders();
     }

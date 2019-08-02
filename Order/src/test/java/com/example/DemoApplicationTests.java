@@ -2,6 +2,7 @@ package com.example;
 
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.example.controller.OrderController;
 import com.example.entity.Admin;
 import com.example.entity.Order;
@@ -48,9 +49,9 @@ public class DemoApplicationTests {
         order.setUserId(1);
         order.setTotalPrice(new BigDecimal(100));
 
-        String str= JSON.toJSONString(order);
-        System.out.println(str);
-       //orderController.Insert_order(order);
+
+        System.out.println(JSONObject.toJSONString(order));
+        //orderController.insertOrder();
     }
 
     @Test
