@@ -89,14 +89,6 @@ public class AdminController {
         session.setAttribute(tel,code);
         return CommonReturnType.create(null);
     }
-
-
-    @RequestMapping(value = "/aaa")
-    public String aaa() { return "test1"; }
-    @RequestMapping(value = "/bbb")
-    public String bbb() {
-        return "test";
-    }
     //登陆
     @RequestMapping(value = "/login")
     @ResponseBody
