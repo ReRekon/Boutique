@@ -11,14 +11,13 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
 mybatis:
   mapper-locations: classpath:mapping/*.xml
-  type-aliases-package: com.study.admin.entity
+  type-aliases-package: com.example.entity
 
 #showSql
 logging:
   level:
     com:
-      study:
-        admin:
+      example:
           mapper : debug
 qiniu:
   accessKey:

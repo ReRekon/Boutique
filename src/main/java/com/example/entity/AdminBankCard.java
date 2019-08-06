@@ -1,4 +1,4 @@
-package com.study.admin.entity;
+package com.example.entity;
 
 public class AdminBankCard {
     private Integer id;

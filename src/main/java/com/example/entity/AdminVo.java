@@ -1,4 +1,4 @@
-package com.study.admin.entity;
+package com.example.entity;
 
 import java.util.Date;
 

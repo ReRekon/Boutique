@@ -1,9 +1,9 @@
-package com.study.admin.mapper;
+package com.example.mapper;
 
-import com.study.admin.entity.Admin;
-import com.study.admin.entity.AdminBankCard;
-import com.study.admin.entity.AdminLoginVo;
-import com.study.admin.entity.AdminVo;
+import com.example.entity.Admin;
+import com.example.entity.AdminBankCard;
+import com.example.entity.AdminLoginVo;
+import com.example.entity.AdminVo;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
 public interface AdminMapper {
 
 
-    public Integer insertAdmin(Admin admin);
+    public void insertAdmin(Admin admin);
 
     public Admin login(AdminLoginVo adminLoginVo);
 

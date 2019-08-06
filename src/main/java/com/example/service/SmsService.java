@@ -1,4 +1,4 @@
-package com.study.admin.service;
+package com.example.service;
 
 /**
  * @Author zuojh

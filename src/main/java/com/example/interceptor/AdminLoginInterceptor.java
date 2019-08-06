@@ -1,6 +1,6 @@
-package com.study.admin.interceptor;
+package com.example.interceptor;
 
-import com.study.admin.entity.AdminVo;
+import com.example.entity.AdminVo;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;

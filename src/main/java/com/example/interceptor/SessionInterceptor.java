@@ -1,4 +1,4 @@
-package com.study.admin.interceptor;
+package com.example.interceptor;
 
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
