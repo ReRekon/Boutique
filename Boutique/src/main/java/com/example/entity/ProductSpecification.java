@@ -3,11 +3,19 @@ package com.example.entity;
 import java.math.BigDecimal;
 
 public class ProductSpecification {
-
     private int productSpecificationId;
     private int productId;
     private String description;
-    private BigDecimal price;
+    private BigDecimal price;       
+    private BigDecimal nprice;
+
+    public BigDecimal getNprice() {
+        return nprice;
+    }
+
+    public void setNprice(BigDecimal nprice) {
+        this.nprice = nprice;
+    }
 
     public int getProductSpecificationId() {
         return productSpecificationId;
@@ -39,5 +47,15 @@ public class ProductSpecification {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductSpecification{" +
+                "productSpecificationId=" + productSpecificationId +
+                ", productId=" + productId +
+                ", description='" + description + '\'' +
+                ", price='" + price + '\'' +
+                '}';
     }
 }

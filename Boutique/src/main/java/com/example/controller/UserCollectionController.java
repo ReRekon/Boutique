@@ -6,10 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.entity.UserCollection;
 import com.example.service.UserCollections;
@@ -18,6 +15,7 @@ import com.github.pagehelper.PageInfo;
 
 @RestController
 @RequestMapping("/usercollection")
+@CrossOrigin(origins = "*",maxAge = 3600)
 public class UserCollectionController {
     @Autowired
     private UserCollections userCollections;
@@ -28,15 +26,15 @@ public class UserCollectionController {
         return userCollections.saveUserCollection(userCollection);
     }
 
-    @RequestMapping("/del/usercollection/{id}")
-    public Boolean delUserCollection(@PathVariable  int id) {
+    @RequestMapping("/del/usercollection/")
+    public Boolean delUserCollection(@RequestBody  int id) {
         return userCollections.delUserCollection(id);
     }
 
-    @RequestMapping("/list/usercollection/{id}")
-    public Object listUserCollection(@RequestParam(value = "page", defaultValue = "1") int page,
-                                     @RequestParam(value = "size", defaultValue = "10") int size,
-                                     @PathVariable int id) {
+    @RequestMapping("/list/usercollection/")
+    public Object listUserCollection(@RequestBody int page,
+                                     @RequestBody int size,
+                                     @RequestBody int id) {
 
         PageHelper.startPage(page, size);
         List<UserCollection> listUserCollection = userCollections.listUserCollection(id);

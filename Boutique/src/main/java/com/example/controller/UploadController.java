@@ -3,10 +3,7 @@ package com.example.controller;
 import com.example.service.impl.UploadServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -34,7 +31,8 @@ public class UploadController {
 
     @PostMapping(value = "/uploadImg")
 //    @ApiOperation(value = "单个图片上传到七牛云")
-    public String uploadImg(@RequestParam(value = "file")MultipartFile upfile) throws IOException {
+    public String uploadImg(@RequestBody MultipartFile upfile) throws IOException {
+
         Map<String,Object> map = new HashMap<>();
         String fileName = upfile.getOriginalFilename();
         File file = new File(url + fileName);

@@ -1,7 +1,9 @@
 package com.example.service.impl;
 
+import com.example.entity.Admin;
 import com.example.entity.Comment;
 import com.example.vo.CommentList;
+import com.example.vo.AdminVo;
 import com.example.entity.CommentReply;
 import com.example.mapper.CommentMapper;
 import com.example.service.CommentService;
@@ -9,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -71,24 +75,34 @@ public class CommentServiceImp implements CommentService {
 
     //显示用户的所有评论
     @Override
-    public List<CommentList> findAllCommentByUser(int userId) {
-        List<CommentList> list=commentMapper.findAllCommentByUser(userId);
-        for(CommentList commentList:list){
-            if(commentList.getState()==1){
-                int commentId=commentList.getCommentId();
-                List<CommentReply> listReply=commentMapper.findChild(commentId);
-                for(CommentReply commentReply:listReply){
-                    commentList.setReplyConnent(commentReply.getReplyConnect());
-                    commentList.setReplyTime(commentReply.getReplyTime());
+    public List<CommentList> findAllCommentByUser(HttpServletRequest request) {
+        HttpSession session=request.getSession();
+        AdminVo admin = (AdminVo) session.getAttribute("admin");
+        if(null!=admin){
+            int userId = admin.getUserId();
+            List<CommentList> list=commentMapper.findAllCommentByUser(userId);
+            for(CommentList commentList:list){
+                if(commentList.getState()==1){
+                    int commentId=commentList.getCommentId();
+                    List<CommentReply> listReply=commentMapper.findChild(commentId);
+                    for(CommentReply commentReply:listReply){
+                        commentList.setReplyConnent(commentReply.getReplyConnect());
+                        commentList.setReplyTime(commentReply.getReplyTime());
+                    }
                 }
             }
+            return list;
+        }else {
+            return null;
         }
-        return list;
     }
 
     //显示个人评论总数
     @Override
-    public int findCount(int userId) {
+    public int findCount(HttpServletRequest request) {
+        HttpSession session=request.getSession();
+        AdminVo admin = (AdminVo) session.getAttribute("admin");
+        int userId = admin.getUserId();
         return commentMapper.findCount(userId);
     }
 

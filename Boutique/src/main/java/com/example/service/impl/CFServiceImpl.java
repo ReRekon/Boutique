@@ -4,6 +4,7 @@ package com.example.service.impl;
 import com.example.entity.Product;
 import com.example.mapper.GuessYouLikesMapper;
 import com.example.service.CFService;
+import com.example.vo.ProductVo;
 import com.example.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,5 +28,8 @@ public class CFServiceImpl implements CFService {
         return guessYouLikesMapper.resultProductTypeId(productId);
     }
 
+    public List<ProductVo> findGuessYouLikes(int productId){
+        return guessYouLikesMapper.findGuessYouLikes(productId);
+    };
 
 }

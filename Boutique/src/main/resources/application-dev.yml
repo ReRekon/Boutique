@@ -1,4 +1,4 @@
-server:
+﻿server:
   port: 8081
   servlet:
     session:
@@ -6,8 +6,8 @@ server:
 spring:
   datasource:
     username: root
-    password: mysql
-    url: jdbc:mysql://localhost:3306/boutique?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    password: zjh521...
+    url: jdbc:mysql://47.106.119.117:3306/Boutique?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     dbcp2:
@@ -15,6 +15,11 @@ spring:
       min-idle: 5
       max-total: 20
       max-wait-millis: 200
+  http:
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
 
 mybatis:
   mapper-locations: classpath:mapping/*.xml

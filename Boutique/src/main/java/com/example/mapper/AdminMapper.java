@@ -12,7 +12,7 @@ import java.util.List;
 public interface AdminMapper {
 
 
-    public Integer insertAdmin(Admin admin);
+    public void insertAdmin(Admin admin);
 
     public Admin login(AdminLoginVo adminLoginVo);
 

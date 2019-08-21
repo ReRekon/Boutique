@@ -1,30 +1,30 @@
 package com.example.service;
+
 import com.example.entity.Admin;
 import com.example.entity.AdminBankCard;
 import com.example.vo.AdminLoginVo;
 import com.example.vo.AdminVo;
-
+import com.example.error.BusinessException;
 import java.util.List;
-
 public interface AdminService {
 
-    //增加admin用户
-    public Boolean insertAdmin(Admin admin);
+        //增加admin用户
+        public void insertAdmin(Admin admin) throws BusinessException;
 
-    public  Admin login(AdminLoginVo adminLoginVo);
+        public  Admin login(AdminLoginVo adminLoginVo) throws BusinessException;
 
-    public Boolean checkUserName(String name);
+        public void checkUserName(String name) throws BusinessException;
 
-    public Boolean insertAdminBankCard(AdminBankCard adminBankCard);
+        public void insertAdminBankCard(AdminBankCard adminBankCard);
 
-    public Boolean checkTel(String tel);
+        public void checkTel(String tel) throws BusinessException;
 
-    public Boolean checkPassword(Admin admin);
+        public void checkPassword(Admin admin) throws BusinessException;
 
-    public void updatePassword(Admin admin);
+        public void updatePassword(Admin admin);
 
-    public List<AdminBankCard> findBankCard(Integer id);
+        public List<AdminBankCard> findBankCard( Integer id);
 
-    public Admin selectByTel(String tel);
-    public void updateAdmin(AdminVo adminVo);
+        public Admin selectByTel(String tel) throws BusinessException;
+        void updateAdmin(AdminVo adminVo);
 }

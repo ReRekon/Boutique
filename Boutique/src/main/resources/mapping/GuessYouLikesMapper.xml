@@ -46,6 +46,16 @@
         <result column="uo_num" property="number"/>
     </resultMap>
 
+    <!--ProductVo的封装-->
+    <resultMap id="productVoResultMap" type="com.example.vo.ProductVo">
+        <result column="t_id" property="productId" />
+        <result column="t_name"  property="name" />
+        <result column="t_dis"  property="description" />
+        <result column="inventory"  property="inventory" />
+        <result column="state"  property="state" />
+        <result column="logo"  property="logo" />
+    </resultMap>
+
     <select id="findProductIdAndNumberByAdminId" resultMap="result" parameterType="int">
         select uo.t_id,uo.uo_num from user_order uo,orders o where o.u_id = #{userId} and o.o_id = uo.o_id
     </select>
@@ -56,6 +66,10 @@
 
     <select id="findGuessYouLike" resultMap="product" >
         select * from product where c_id=(select c_id from product where c_id =#{productTypeId}) order by heat desc limit 6;
+    </select>
+
+    <select id="findGuessYouLikes" resultMap="productVoResultMap">
+        select p.t_id,p.t_name,p.t_dis,p.inventory,p.state,p.logo from product p where c_id = #{productTypeId} order by heat desc limit 6;
     </select>
 
 </mapper>

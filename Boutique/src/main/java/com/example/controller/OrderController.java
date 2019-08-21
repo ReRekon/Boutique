@@ -13,6 +13,7 @@ import java.util.*;
 @Controller
 @RequestMapping("/testBoot")
 @Transactional
+@CrossOrigin(origins = "*",maxAge = 3600)
 public class OrderController
 {
     @Autowired

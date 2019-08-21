@@ -12,7 +12,7 @@
         <result column="state" javaType="Integer"  property="state" />
         <result column="final_pay" javaType="BigDecimal" property="finalPrice" />
         <result column="total_prirce" javaType="BigDecimal" property="totalPrice" />
-        <result column="pro_imgage" javaType="String" property="imageURL"/>
+        <result column="logo" javaType="String" property="logo"/>
     </resultMap>
 
     <!--商品规格-->
@@ -32,15 +32,14 @@
     <!--商品-->
     <resultMap id="productResultMap" type="com.example.entity.Product">
         <result column="t_id" javaType="Integer" property="productId" />
-
         <result column="t_name" javaType="String" property="name" />
         <result column="t_dis" javaType="String" property="description" />
-        <result column="t_coll_count" javaType="Long" property="collectTimes" />
-        <result column="inventory" javaType="Long" property="inventory" />
-        <result column="heat" javaType="Integer" property="heat" />
-        <result column="mark" javaType="Float" property="mark" />
-        <result column="state" javaType="Integer" property="state" />
-        <result column="discount" javaType="Float" property="discount" />
+        <!--<result column="t_coll_count" javaType="Long" property="collectTimes" />-->
+        <!--<result column="inventory" javaType="Long" property="inventory" />-->
+        <!--<result column="heat" javaType="Integer" property="heat" />-->
+        <!--<result column="mark" javaType="Float" property="mark" />-->
+        <!--<result column="state" javaType="Integer" property="state" />-->
+        <!--<result column="discount" javaType="Float" property="discount" />-->
         <result column="logo" javaType="String" property="logo" />
     </resultMap>
 
@@ -114,4 +113,13 @@
     select * from shop_cart where u_id=#{id}
     </select>
 
+    <!--通过个别商品名返回商品名列表-->
+    <select id="productNameList" parameterType="String" resultType="String">
+        select t_name from product where t_name like "%"#{name}"%"
+    </select>
+
+    <!--通过商品id返回一个价格-->
+    <select id="productpriceByPid" parameterType="Integer" resultType="BigDecimal">
+        SELECT t_price FROM goods_specific WHERE gs_id=#{id} limit 1
+    </select>
 </mapper>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form action="/admin/login" method="post" id="myform">
+        name:<input name="name" type="text" id="username"/>
+        pa:<input name="password" type="password" id="pass"/>
+        submit:<input name="提叫" type="submit" id="button">
+    </form>
+</body>
+<script>
+    var oF = document.getElementById("myform")
+    var oN = document.getElementById("username")
+    var oP = document.getElementById("pass")
+    var oB = document.getElementById("button")
+    var fd = new FormData(oF)
+    oB.onclick = function(){
+       fetch({
+       url:"/admin/login",
+           method:"post",
+           headers:{
+           "Content-Type":"application/json;charset=UTF-8"
+           }
+           body:JSON.stringify(fd)
+       }
+    })
+
+</script>
+</html>

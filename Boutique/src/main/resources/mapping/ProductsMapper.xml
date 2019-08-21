@@ -51,7 +51,7 @@
     </resultMap>
 
        <select id="selectProduct" parameterType="Integer" resultMap="productResultMap" resultType="com.example.entity.Product">
-    select * from product where t_id=#{productId}
+          select * from product where t_id=#{productId}
     </select>
 
 

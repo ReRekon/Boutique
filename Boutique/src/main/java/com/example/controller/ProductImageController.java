@@ -5,15 +5,14 @@ import com.example.service.impl.ProductImageServiceImpl;
 import com.example.entity.ProductImage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @Controller
 @RequestMapping("/productImage")
+@CrossOrigin(origins = "*",maxAge = 3600)
 public class ProductImageController {
 
     @Autowired
@@ -41,7 +40,7 @@ public class ProductImageController {
      */
     @RequestMapping("/deleteProductImage")
     @ResponseBody
-    public int delete(@RequestParam("productImageId") int productImageId){
+    public int delete(@RequestBody int productImageId){
         return productImageService.delete(productImageId);
     }
 
@@ -65,7 +64,7 @@ public class ProductImageController {
      */
     @ResponseBody
     @RequestMapping("/getProductImage")
-    public String getImg(@RequestParam("productImageId") int productImageId){
+    public String getImg(@RequestBody int productImageId){
         List<ProductImage> productImageList = productImageService.findAll(productImageId);
         return JSONObject.toJSONString(productImageList);
     }

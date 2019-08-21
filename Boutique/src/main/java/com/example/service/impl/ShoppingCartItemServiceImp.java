@@ -76,7 +76,9 @@ public class ShoppingCartItemServiceImp implements ShoppingCartItemService {
     /*
     通过用户id添加用户购物车里面的商品
      */
-    public void addShopItem(int productid,int psid,Long num,int id){
+    public boolean addShopItem(int productid,int psid,Long num,int id){
+
+        boolean b=true;
 
         ShoppingCartItem shoppingCartItem=new ShoppingCartItem();
 
@@ -185,19 +187,16 @@ public class ShoppingCartItemServiceImp implements ShoppingCartItemService {
                     //若数量变为0，那么删除该购物项，否则就只修改商品数量
                     shoppingCartItemMapper.deleteByGid(gid);
                 }
-////
-//                if(num==0){
-//                    shoppingCartItemMapper.deleteByGid(gid);
-//                }
-//                else {
-//                    shoppingCartItemMapper.updataNumByGid(sid,num,totalprice1,finalprice1);
-//                }
+
+                b=true;
 
             }
 
         }
-
-
+        else {
+            b=false;
+        }
+      return b;
     }
 
 //    public String getImgByPid(int id){
@@ -214,7 +213,18 @@ public class ShoppingCartItemServiceImp implements ShoppingCartItemService {
         return shoppingCartItemMapper.findProductsByName(name);
     }
 
+    //通过名字获取有关商品名的list
+    public List<String> getAllProductNameByName(String name){
 
+        return shoppingCartItemMapper.productNameList(name);
+    }
+
+    //通过商品id获取唯一价格
+    public BigDecimal getProductOnePrice(int id)
+    {
+        return shoppingCartItemMapper.productpriceByPid(id);
+
+    }
 
 
 }

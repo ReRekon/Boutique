@@ -60,5 +60,11 @@ public interface ShoppingCartItemMapper {
     //检验一个用户是否只是一个购物车
     List<ShoppingCart> checkoutShopCartByUid(int id);
 
+    //通过用户输入的商品名，返回有关商品名的列表
+    List<String> productNameList(String name);
+
+    //通过商品id查的一个价格
+    BigDecimal productpriceByPid(int id);
+
 
 }

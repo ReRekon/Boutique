@@ -39,7 +39,7 @@
     </update>
 
     <select id="findAll" parameterType="int" resultMap="SpecificationImageResultMap">
-        select * from specifiction_image where id = #{specificationImageId}
+        select * from specifiction_image where gs_id = #{productId}
     </select>
 
     <!--<select id="findUserId" parameterType="Sreing" resultMap="AdminAddressResultMap">-->

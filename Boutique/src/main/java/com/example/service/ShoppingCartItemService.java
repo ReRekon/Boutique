@@ -14,10 +14,12 @@ public interface ShoppingCartItemService {
 
     public void deleteItemByGid(List<Integer> list);
 
-    public void addShopItem(int productid,int psid,Long num,int id);
+    public boolean addShopItem(int productid,int psid,Long num,int id);
 
     public List<Product> getAllProductByName(String name);
 
+    public List<String> getAllProductNameByName(String name);
 
+    public BigDecimal getProductOnePrice(int id);
 
 }

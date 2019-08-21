@@ -8,15 +8,20 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
+import com.example.error.BusinessException;
+import com.example.error.EmBusinessError;
 import com.example.service.SmsService;
-
 
 /**
  * @Author zuojh
  * @date 2019/7/27 22:10
  */
 public class SmsServiceImpl implements SmsService {
-    public static void send(String telephone, String code) {
+    public static void send(String telephone, String code) throws BusinessException {
+        System.out.println(telephone+"         "+code);
+        if(telephone==null){
+            throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
+        }
         //第二个参数为自己独有的accessKeyid，第三个参数为自己独有的accessKeySecret
         DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou",
                 "LTAI81uuxQORTPvP", "6XhQJ6DaBeGUZRcomMam0z7ohTRRSU");

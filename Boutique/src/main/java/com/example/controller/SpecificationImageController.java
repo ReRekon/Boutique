@@ -5,15 +5,14 @@ import com.example.service.impl.SpecificationImageServiceImpl;
 import com.example.entity.SpecificationImage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @Controller
 @RequestMapping("/SpecificationImage")
+@CrossOrigin(origins = "*",maxAge = 3600)
 public class SpecificationImageController {
 
     @Autowired
@@ -29,7 +28,7 @@ public class SpecificationImageController {
 
     @RequestMapping("/deleteSpecificationImage")
     @ResponseBody
-    public int delete(@RequestParam("specificationImageId")int specificationImageId){
+    public int delete(@RequestBody int specificationImageId){
         return specificationImageService.delete(specificationImageId);
     }
 
@@ -41,8 +40,8 @@ public class SpecificationImageController {
 
     @RequestMapping("/getSpecificationImage")
     @ResponseBody
-    public String getSpecificationImage(@RequestParam("specificationImageId") int specificationImageId){
-        List<SpecificationImage> specificationImageList = specificationImageService.findAll(specificationImageId);
+    public String getSpecificationImage(@RequestBody int productId){
+        List<SpecificationImage> specificationImageList = specificationImageService.findAll(productId);
         //System.out.println(specificationImageService.findAll(specificationImageId)+"########");
         return JSONObject.toJSONString(specificationImageList);
     }

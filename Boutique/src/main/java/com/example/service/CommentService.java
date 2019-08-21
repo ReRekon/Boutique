@@ -3,6 +3,7 @@ package com.example.service;
 import com.example.vo.CommentList;
 import com.example.entity.CommentReply;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface CommentService {
@@ -20,12 +21,11 @@ public interface CommentService {
     List<CommentReply> findChild(int commentId);
 
     ////显示用户的所有评论
-    List<CommentList> findAllCommentByUser(int userId);
+    List<CommentList> findAllCommentByUser(HttpServletRequest request);
 
     //显示个人评论总数
-    int findCount(int userId);
+    int findCount(HttpServletRequest request);
 
     //根据商品获取商品评分
     String getStar(int articleId);
-
 }

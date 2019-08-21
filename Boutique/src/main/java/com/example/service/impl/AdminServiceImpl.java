@@ -2,10 +2,13 @@ package com.example.service.impl;
 
 import com.example.entity.Admin;
 import com.example.entity.AdminBankCard;
-import com.example.mapper.AdminMapper;
-import com.example.service.AdminService;
 import com.example.vo.AdminLoginVo;
 import com.example.vo.AdminVo;
+import com.example.error.BusinessException;
+import com.example.error.EmBusinessError;
+import com.example.mapper.AdminMapper;
+import com.example.service.AdminService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,38 +24,64 @@ public class AdminServiceImpl implements AdminService {
 
 
     @Override
-    public Boolean insertAdmin(Admin admin) {
-        Integer i = adminMapper.insertAdmin(admin);
-        return i>0?true:false;
+    public void insertAdmin(Admin admin) throws BusinessException {
+        if(admin==null){
+            throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
+        }
+        if(StringUtils.isEmpty(admin.getName())||
+                StringUtils.isEmpty(admin.getPassword())||
+                StringUtils.isEmpty(admin.getTel())){
+            throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
+        }
+        this.checkUserName(admin.getName());
+        this.checkTel(admin.getTel());
+        adminMapper.insertAdmin(admin);
     }
 
     @Override
-    public Admin login(AdminLoginVo adminLoginVo) {
-        return adminMapper.login(adminLoginVo);
+    public Admin login(AdminLoginVo adminLoginVo) throws BusinessException {
+        Admin admin = adminMapper.login(adminLoginVo);
+        if(admin==null){
+            throw new BusinessException(EmBusinessError.USER_LOGIN_FAIL);
+        }
+        if(!StringUtils.equals(admin.getPassword(),adminLoginVo.getPassword())){
+            throw new BusinessException(EmBusinessError.USER_LOGIN_FAIL);
+        }
+        return admin;
     }
 
     @Override
-    public Boolean checkUserName(String name) {
+    public void checkUserName(String name) throws BusinessException {
+        if(name.equals("")){
+            throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
+        }
         Integer i = adminMapper.checkUserName(name);
-        return i>0?true:false;
+        if(i>0){
+            throw new BusinessException(EmBusinessError.USER_NAME_SAME);
+        }
     }
 
     @Override
-    public Boolean insertAdminBankCard(AdminBankCard adminBankCard) {
-        Integer i = adminMapper.insertAdminBankCard(adminBankCard);
-        return i>0?true:false;
+    public void insertAdminBankCard(AdminBankCard adminBankCard) {
+
+        adminMapper.insertAdminBankCard(adminBankCard);
+
     }
 
     @Override
-    public Boolean checkTel(String tel) {
+    public void checkTel(String tel) throws BusinessException {
         Integer i = adminMapper.checkTel(tel);
-        return i>0?true:false;
+        if(i>0){
+            throw new BusinessException(EmBusinessError.USER_TEL_SAME);
+        }
     }
 
     @Override
-    public Boolean checkPassword(Admin admin) {
+    public void checkPassword(Admin admin) throws BusinessException {
         Integer i = adminMapper.checkPassword(admin);
-        return i>0?true:false;
+        if(i==0){
+            throw new BusinessException(EmBusinessError.PASSWORD_FAIL);
+        }
     }
 
     @Override
@@ -61,13 +90,17 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<AdminBankCard> findBankCard(Integer id) {
+    public List<AdminBankCard> findBankCard(Integer id){
         return adminMapper.findBankCard(id);
     }
 
     @Override
-    public Admin selectByTel(String tel) {
-        return adminMapper.selectByTel(tel);
+    public Admin selectByTel(String tel) throws BusinessException {
+        Admin admin = adminMapper.selectByTel(tel);
+        if(admin==null){
+            throw new BusinessException(EmBusinessError.USER_NOT_EXIST);
+        }
+        return admin;
     }
 
 

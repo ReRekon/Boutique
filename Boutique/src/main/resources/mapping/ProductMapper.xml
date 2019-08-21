@@ -3,18 +3,13 @@
 <mapper namespace="com.example.mapper.ProductMapper">
 
     <!--   一个商品有多张图片     -->
-    <resultMap id="productResultMap" type="com.example.entity.Product">
+    <!--ProductVo的封装-->
+    <resultMap id="productVoResultMap" type="com.example.vo.ProductVo">
         <result column="t_id" property="productId" />
-        <result column="c_id" property="productTypeId" />
-        <result column="c_id2" property="productTypeId2" />
         <result column="t_name"  property="name" />
         <result column="t_dis"  property="description" />
-        <result column="t_coll_count"  property="collectTimes" />
         <result column="inventory"  property="inventory" />
-        <result column="heat"  property="heat" />
-        <result column="mark"  property="mark" />
         <result column="state"  property="state" />
-        <result column="discount"  property="discount" />
         <result column="logo"  property="logo" />
     </resultMap>
 
@@ -42,36 +37,17 @@
         <result column="c_id1"  property="productTypeId" />
     </resultMap>
 
-    <!--    一个分类有多个商品      -->
-    <!--<resultMap id="productTypeResultMap" type="com.example.entity.ProductType">
-        <id column="c_id" property="productTypeId" />
-        <result column="c_name"  property="ProductTypeName" />
-        <result column="state"  property="state" />
-
-        <association property="product" javaType="com.example.entity.Product" column="c_id">
-            <id column="t_id" property="productId" />
-            <result column="t_name"  property="name" />
-            <result column="t_dis"  property="description" />
-            <result column="t_coll_count"  property="collectTimes" />
-            <result column="inventory"  property="inventory" />
-            <result column="t_img"  property="imgURL" />
-            <result column="heat"  property="heat" />
-            <result column="mark"  property="mark" />
-            <result column="state"  property="state" />
-            <result column="discount"  property="discount" />
-        </association>
-    </resultMap>-->
 
     <!--  通过一级分类下的二级分类查商品  -->
-    <select  id="queryProductByProductType2" parameterType="int" resultType="Product">
-        select * from product where c_id in(select c_id from producttype2 where c_id2 = #{c_id2} );
+    <select  id="queryProductByProductType2" parameterType="int" resultType="com.example.vo.ProductVo" >
+        select * from product where c_id in(select c_id from producttype2 where c_id2 = #{c_id2} ) and state!=0;
     </select>
 
 
     <!--   通过一级分类查询商品   -->
-    <select id="queryProductByProductType1"  parameterType="int" resultType="Product">
-         select p.t_id,p.c_id,p.t_name,p.t_dis,p.t_coll_count,p.inventory,p.heat,p.mark,p.state,p.discount,p.logo
-                from product p where p.c_id = #{c_id};
+    <select id="queryProductByProductType1"  parameterType="int" resultType="com.example.vo.ProductVo" >
+         select p.t_id,p.c_id,p.t_name,p.t_dis,p.inventory,p.state,p.logo
+                from product p where p.c_id = #{c_id} and p.state!=0;
     </select>
 
 
@@ -80,6 +56,9 @@
          select * from product_image where t_id = #{p_id}
     </select>
 
-
+    <!--  -->
+    <select id="queryFocusProduct"  parameterType="int" resultType="com.example.vo.ProductVo" >
+         select * from product p where p.c_id2 = #{c_id} and p.state!=0;
+    </select>
 
 </mapper>
