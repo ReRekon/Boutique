@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+	</head>
+	<body>
+		<div style="width: 400px; margin: 50px auto;">
+			<form action="register" method="post" >
+			  <div class="form-group">
+			    <label >用户名：</label>
+			    <input type="text" name="uname" class="form-control"  placeholder="请输入用户名">
+			  </div>
+			  <div class="form-group">
+			    <label>密码</label>
+			    <input type="password" name="upwd" class="form-control" placeholder="Password">
+			  </div>
+			  <div class="form-group">
+			    <label>确认密码</label>
+			    <input type="password" name="repwd" class="form-control" placeholder="Password">
+			  </div>
+			  <div class="form-group">
+			    <label >姓名：</label>
+			    <input type="text" name="name" class="form-control"  placeholder="姓名">
+			  </div>
+			   <div class="form-group">
+			    <label >性别：</label>
+			    <input type="radio" value="M" name="sex" checked="checked"/>男
+			      <input type="radio" value="F" name="sex"/>女
+			  </div>
+			     <div class="form-group">
+			    <label >年龄：</label>
+			      <select name="age" class="form-control" >
+			        <option value="18">18</option>
+			         <option value="19">19</option>
+			          <option value="20">20</option>
+			           <option value="21">21</option>
+			            <option value="22">22</option>
+			      </select>
+			  </div>
+			  <button type="submit" class="btn btn-success">注册</button>
+			  <a href="login.html" class="btn btn-info">登录</a>
+</form>
+		</div>
+	</body>
+</html>
